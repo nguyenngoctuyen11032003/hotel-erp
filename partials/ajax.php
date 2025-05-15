@@ -1,72 +1,52 @@
 <?php
 include('../config/pdoconfig.php');
 
-//Room ID
+// Lấy ID phòng theo số phòng
 if (!empty($_POST["RNumber"])) {
     $id = $_POST['RNumber'];
     $stmt = $DB_con->prepare("SELECT * FROM rooms WHERE number = :id ");
     $stmt->execute(array(':id' => $id));
-?>
-<?php
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-?>
-<?php echo htmlentities($row['id']); ?>
-<?php
+        echo htmlentities($row['id']);
     }
 }
 
-//Room Price
+// Lấy giá phòng theo số phòng
 if (!empty($_POST["RID"])) {
     $id = $_POST['RID'];
-    $stmt = $DB_con->prepare("SELECT * FROM  rooms WHERE number = :id ");
+    $stmt = $DB_con->prepare("SELECT * FROM rooms WHERE number = :id ");
     $stmt->execute(array(':id' => $id));
-?>
-<?php
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-?>
-<?php echo htmlentities($row['price']); ?>
-<?php
+        echo htmlentities($row['price']);
     }
 }
 
-//Room Type
+// Lấy loại phòng theo số phòng
 if (!empty($_POST["RCost"])) {
     $id = $_POST['RCost'];
-    $stmt = $DB_con->prepare("SELECT * FROM  rooms WHERE number = :id ");
+    $stmt = $DB_con->prepare("SELECT * FROM rooms WHERE number = :id ");
     $stmt->execute(array(':id' => $id));
-?>
-<?php
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-?>
-<?php echo htmlentities($row['type']); ?>
-<?php
+        echo htmlentities($row['type']);
     }
 }
 
-
-/* Staff Details */
+// Lấy thông tin nhân viên theo mã số nhân viên
 if (!empty($_POST["StaffNumber"])) {
     $id = $_POST['StaffNumber'];
     $stmt = $DB_con->prepare("SELECT * FROM staffs WHERE number = :id ");
     $stmt->execute(array(':id' => $id));
-?>
-<?php
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-?>
-<?php echo htmlentities($row['id']); ?>
-<?php
+        echo htmlentities($row['id']);
     }
 }
 
+// Lấy tên nhân viên theo mã số nhân viên
 if (!empty($_POST["StaffID"])) {
     $id = $_POST['StaffID'];
     $stmt = $DB_con->prepare("SELECT * FROM staffs WHERE number = :id ");
     $stmt->execute(array(':id' => $id));
-?>
-<?php
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-?>
-<?php echo htmlentities($row['name']); ?>
-<?php
+        echo htmlentities($row['name']);
     }
 }

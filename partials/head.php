@@ -37,31 +37,28 @@ while ($sys = $res->fetch_object()) {
             <script>
                 setTimeout(function() {
                         swal(
-                            "Success", "<?php echo $success; ?>", "success",
+                            "Thành công", "<?php echo $success; ?>", "success",
                         );
                     },
                     100);
             </script>
-
         <?php } ?>
 
         <?php if (isset($err)) { ?>
             <script>
                 setTimeout(function() {
-                        swal("Failed", "<?php echo $err; ?>", "error", );
+                        swal("Thất bại", "<?php echo $err; ?>", "error", );
                     },
                     100);
             </script>
-
         <?php } ?>
         <?php if (isset($info)) { ?>
             <script>
                 setTimeout(function() {
-                        swal("Success", "<?php echo $info; ?>", "warning");
+                        swal("Thông báo", "<?php echo $info; ?>", "warning");
                     },
                     100);
             </script>
-
     <?php }
     }
     ?>

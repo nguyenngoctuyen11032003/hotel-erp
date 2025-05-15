@@ -6,18 +6,17 @@
         <nav class="main_nav">
             <ul class="d-flex flex-row align-items-center justify-content-start">
                 <li class=""><a href="index.php">Trang chủ</a></li>
-                <li><a href="about.php">Về chúng tôi</a></li>
-                <li><a href="rooms.php">Phòng</a></li>
+                <li><a href="about.php">Giới thiệu</a></li>
+                <li><a href="rooms.php">Phòng nghỉ</a></li>
                 <li><a href="staff/">Cổng nhân viên</a></li>
-
             </ul>
         </nav>
 
         <div class="social header_social">
             <ul class="d-flex flex-row align-items-center justify-content-start">
-                <li><a target="_blank" href="https://facebook.com/<?php echo $sys->social_fb; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://www.facebook.com/share/18mvjUehjc/?mibextid=wwXIfr<?php echo $sys->social_fb; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                 <li><a target="_blank" href="https://twitter.com/<?php echo $sys->social_twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                <li><a target="_blank" href="https://instagram.com/<?php echo $sys->social_ig ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://www.instagram.com/nn.tuyn/profilecard/?igsh=eGZlZ2l3czVoZjhv<?php echo $sys->social_ig ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
             </ul>
         </div>
 
@@ -31,7 +30,7 @@
                 </svg>
             </div>
 
-            <div class="header_link"><a href="rooms.php">Đặt phòng ngay bây giờ</a></div>
+            <div class="header_link"><a href="rooms.php">Đặt phòng ngay</a></div>
 
             <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
         </div>
@@ -58,18 +57,18 @@
         <nav class="menu_nav text-center">
             <ul>
                 <li><a href="index.php">Trang chủ</a></li>
-                <li><a href="about.php">Về chúng tôi</a></li>
-                <li><a href="rooms.php">Đặt phòng</a></li>
+                <li><a href="about.php">Giới thiệu</a></li>
+                <li><a href="rooms.php">Phòng nghỉ</a></li>
                 <li><a href="staff/">Cổng nhân viên</a></li>
             </ul>
         </nav>
-        <div class="button menu_button"><a href="rooms.php">đặt ngay</a></div>
+        <div class="button menu_button"><a href="rooms.php">Đặt phòng</a></div>
 
         <div class="social menu_social">
             <ul class="d-flex flex-row align-items-center justify-content-start">
-                <li><a target="_blank" href="https://facebook.com/<?php echo $sys->social_fb; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://www.facebook.com/share/18mvjUehjc/?mibextid=wwXIfr<?php echo $sys->social_fb; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                 <li><a target="_blank" href="https://twitter.com/<?php echo $sys->social_twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                <li><a target="_blank" href="https://instagram.com/<?php echo $sys->social_ig; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://www.instagram.com/nn.tuyn/profilecard/?igsh=eGZlZ2l3czVoZjhv<?php echo $sys->social_ig; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
             </ul>
         </div>
     </div>

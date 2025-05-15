@@ -7,8 +7,8 @@
     $stmt->execute(); //ok
     $res = $stmt->get_result();
     while ($sys = $res->fetch_object()) {
-        /* Check For Missing Logo And Load Default */
-        if ($sys_logo = '') {
+        // Sửa lỗi logic: kiểm tra rỗng thay vì gán
+        if (empty($sys->sys_logo)) {
             $logo_dir = '../public/uploads/sys_logo/logo.png';
         } else {
             $logo_dir = "../public/uploads/sys_logo/$sys->sys_logo";
@@ -30,7 +30,7 @@
                     <a href="dashboard.php" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Dashboard
+                            Trang chủ
                         </p>
                     </a>
                 </li>
@@ -48,7 +48,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-calendar-check"></i>
                         <p>
-                            Quản lý đặt chỗ
+                            Quản lý đặt phòng
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -56,13 +56,13 @@
                         <li class="nav-item">
                             <a href="reservations.php" class="nav-link">
                                 <i class="fas fa-angle-right nav-icon"></i>
-                                <p>Đặt phòng</p>
+                                <p>Danh sách đặt phòng</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="reservation_payments.php" class="nav-link">
                                 <i class="fas fa-angle-right nav-icon"></i>
-                                <p>Thanh toán</p>
+                                <p>Thanh toán đặt phòng</p>
                             </a>
                         </li>
                     </ul>
@@ -81,7 +81,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
-                            HRM
+                            Quản lý nhân sự
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -95,7 +95,7 @@
                         <li class="nav-item">
                             <a href="payrolls.php" class="nav-link">
                                 <i class="fas fa-angle-right nav-icon"></i>
-                                <p>Lương</p>
+                                <p>Bảng lương</p>
                             </a>
                         </li>
                     </ul>
@@ -105,7 +105,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user-friends"></i>
                         <p>
-                            CRM
+                            Quản lý khách hàng
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -113,7 +113,7 @@
                         <li class="nav-item">
                             <a href="customers.php" class="nav-link">
                                 <i class="fas fa-angle-right nav-icon"></i>
-                                <p>Quản lý khách hàng</p>
+                                <p>Khách hàng</p>
                             </a>
                         </li>
                     </ul>
@@ -132,7 +132,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-dolly-flatbed"></i>
                         <p>
-                            Quản lý tồn kho
+                            Quản lý kho
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -149,7 +149,6 @@
                                 <p>Phòng</p>
                             </a>
                         </li>
-
                     </ul>
                 </li>
 
@@ -157,7 +156,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
-                            Báo cáo
+                            Báo cáo thống kê
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -165,34 +164,32 @@
                         <li class="nav-item">
                             <a href="reports_rooms.php" class="nav-link">
                                 <i class="fas fa-angle-right nav-icon"></i>
-                                <p>Phòng</p>
+                                <p>Báo cáo phòng</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="reports_reservations.php" class="nav-link">
                                 <i class="fas fa-angle-right nav-icon"></i>
-                                <p>Đặt phòng</p>
+                                <p>Báo cáo đặt phòng</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="reports_revenues.php" class="nav-link">
                                 <i class="fas fa-angle-right nav-icon"></i>
-                                <p>Doanh thu</p>
+                                <p>Báo cáo doanh thu</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-
                 <li class="nav-item">
                     <a href="logout.php" class="nav-link">
                         <i class="nav-icon fas fa-power-off"></i>
                         <p>
-                            Kết thúc phiên làm việc
+                            Đăng xuất
                         </p>
                     </a>
                 </li>
-
             </ul>
         </nav>
     </div>

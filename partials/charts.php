@@ -1,12 +1,12 @@
 <!-- ChartJS -->
 <script src="../public/plugins/chart.js/Chart.min.js"></script>
-<!-- Analytics -->
+<!-- Phân tích dữ liệu -->
 <?php require_once('../partials/analytics.php'); ?>
-<!-- Init Charts -->
+<!-- Khởi tạo biểu đồ -->
 <script>
     $(function() {
 
-        /* Number Of Rooms As Per Room Type */
+        /* Số lượng phòng theo từng loại */
         var roomNumberChart = $('#NumberOfRoomsAsType').get(0).getContext('2d')
         var roomNumberChartData = {
             labels: [
@@ -33,8 +33,7 @@
             options: roomNumberChartOptions
         })
 
-
-        /* Rooms Reserations As Per Room Types */
+        /* Số lượt đặt phòng theo từng loại */
         var roomReservationsChart = $('#roomReservations').get(0).getContext('2d')
         var roomReservationsChartData = {
             labels: [
@@ -61,7 +60,7 @@
             options: roomReservationsChartOptions
         })
 
-        /* Rooms Income As Room Type */
+        /* Doanh thu theo từng loại phòng */
         var RoomsIncomeChart = $('#RoomsIncome').get(0).getContext('2d')
         var RoomsIncomeChartData = {
             labels: [
@@ -88,7 +87,5 @@
             options: RoomsIncomeChartOptions
         })
 
-
     })
-
 </script>
