@@ -21,12 +21,12 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark">Dashboard </h1>
+                            <h1 class="m-0 text-dark">Bảng điều khiển</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="dashboard.php">Trang chủ</a></li>
-                                <li class="breadcrumb-item active">Dashboard</li>
+                                <li class="breadcrumb-item active">Bảng điều khiển</li>
                             </ol>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ require_once("../partials/head.php");
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-thumbs-down"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Phòng chưa sử dụng</span>
+                                    <span class="info-box-text">Phòng còn trống</span>
                                     <span class="info-box-number"><?php echo $rooms_vacant; ?></span>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@ require_once("../partials/head.php");
                                 <div class="info-box-content">
                                     <span class="info-box-text">Doanh thu phòng</span>
                                     <span class="info-box-number">
-                                        <?php echo $accomodation; ?>Vnđ
+                                        <?php echo $accomodation; ?> VND
                                     </span>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@ require_once("../partials/head.php");
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Doanh thu nhà hàng</span>
-                                    <span class="info-box-number"><?php echo $Resturant_Service; ?>Vnđ</span>
+                                    <span class="info-box-number"><?php echo $Resturant_Service; ?> VND</span>
                                 </div>
                             </div>
                         </div>
@@ -124,14 +124,14 @@ require_once("../partials/head.php");
                                     <div class="row">
                                         <div class="col-sm-6 col-6">
                                             <div class="description-block border-right">
-                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation); ?>Vnđ</h5>
-                                                <span class="description-text">Doanh thu</span>
+                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation); ?> VND</h5>
+                                                <span class="description-text">Tổng doanh thu</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-6">
                                             <div class="description-block border-right">
-                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation) - ($salary); ?>Vnđ</h5>
-                                                <span class="description-text">Tổng doanh thu</span>
+                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation) - ($salary); ?> VND</h5>
+                                                <span class="description-text">Lợi nhuận sau lương</span>
                                             </div>
                                         </div>
                                     </div>
@@ -190,9 +190,7 @@ require_once("../partials/head.php");
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Đặt phòng gần đây
-                                        <!-- <span class="pull-right badge bg-warning">View All</span> -->
-                                    </h3>
+                                    <h3 class="card-title">Đặt phòng gần đây</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -207,25 +205,17 @@ require_once("../partials/head.php");
                                         <table class="table table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        Code
-                                                    </th>
-                                                    <th>
-                                                        Price
-                                                    </th>
-                                                    <th>
-                                                        Client
-                                                    </th>
-                                                    <th>
-                                                        Time Reserved
-                                                    </th>
+                                                    <th>Số phòng</th>
+                                                    <th>Giá</th>
+                                                    <th>Khách hàng</th>
+                                                    <th>Thời gian đặt</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $ret = "SELECT * FROM `reservations` ORDER BY `reservations`.`created_at` DESC LIMIT 5  ";
+                                                $ret = "SELECT * FROM `reservations` ORDER BY `reservations`.`created_at` DESC LIMIT 5";
                                                 $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
+                                                $stmt->execute();
                                                 $res = $stmt->get_result();
                                                 while ($reservation = $res->fetch_object()) {
                                                 ?>
@@ -233,15 +223,14 @@ require_once("../partials/head.php");
                                                         <td>
                                                             <div class="td-content"><span class="badge badge-success"><?php echo $reservation->room_number; ?></span></div>
                                                         </td>
-
                                                         <td>
-                                                            KSH <?php echo $reservation->room_cost; ?>
+                                                            <?php echo number_format($reservation->room_cost); ?> VND
                                                         </td>
                                                         <td>
                                                             <?php echo $reservation->cust_name; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo date('d M Y g:i', strtotime($reservation->created_at)); ?>
+                                                            <?php echo date('d/m/Y H:i', strtotime($reservation->created_at)); ?>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -255,7 +244,7 @@ require_once("../partials/head.php");
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Các khoản thanh toán gần đây</h3>
+                                    <h3 class="card-title">Thanh toán gần đây</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -271,25 +260,17 @@ require_once("../partials/head.php");
                                             <table class="table table-sm">
                                                 <thead>
                                                     <tr>
-                                                        <th>
-                                                            Code
-                                                        </th>
-                                                        <th>
-                                                            Amount
-                                                        </th>
-                                                        <th>
-                                                            Service Paid
-                                                        </th>
-                                                        <th>
-                                                            Paid On
-                                                        </th>
+                                                        <th>Mã thanh toán</th>
+                                                        <th>Số tiền</th>
+                                                        <th>Dịch vụ</th>
+                                                        <th>Ngày thanh toán</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $ret = "SELECT  * FROM `payments`  ORDER BY `payments`.`created_at` DESC  LIMIT 5 ";
+                                                    $ret = "SELECT * FROM `payments` ORDER BY `payments`.`created_at` DESC LIMIT 5";
                                                     $stmt = $mysqli->prepare($ret);
-                                                    $stmt->execute(); //ok
+                                                    $stmt->execute();
                                                     $res = $stmt->get_result();
                                                     while ($payments = $res->fetch_object()) {
                                                     ?>
@@ -298,13 +279,13 @@ require_once("../partials/head.php");
                                                                 <div class="td-content"><span class="badge badge-success"><?php echo $payments->code; ?></span></div>
                                                             </td>
                                                             <td>
-                                                            Ksh <?php echo $payments->amt; ?>
+                                                                <?php echo number_format($payments->amt); ?> VND
                                                             </td>
                                                             <td>
-                                                                 <?php echo $payments->service_paid; ?>
+                                                                <?php echo $payments->service_paid; ?>
                                                             </td>
                                                             <td>
-                                                                <span class="text-center badge bg-primary"><?php echo date('d M Y g:ia', strtotime($payments->created_at)); ?> </span>
+                                                                <span class="text-center badge bg-primary"><?php echo date('d/m/Y H:i', strtotime($payments->created_at)); ?> </span>
                                                             </td>
                                                         </tr>
                                                     <?php } ?>

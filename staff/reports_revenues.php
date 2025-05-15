@@ -23,13 +23,13 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Reveue Reports </h1>
+                            <h1>Báo cáo doanh thu</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="">Reports</a></li>
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                <li class="breadcrumb-item"><a href="#">Báo cáo</a></li>
                                 <li class="breadcrumb-item active">Doanh thu</li>
                             </ol>
                         </div>
@@ -44,12 +44,12 @@ require_once("../partials/head.php");
                         <table id="reports" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Code</th>
-                                    <th>Amount</th>
-                                    <th>Customer Name</th>
-                                    <th>Payment Means</th>
-                                    <th>Paid On</th>
-                                    <th>Service Paid</th>
+                                    <th>Mã thanh toán</th>
+                                    <th>Số tiền</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Phương thức thanh toán</th>
+                                    <th>Ngày thanh toán</th>
+                                    <th>Dịch vụ</th>
                                 </tr>
                             </thead>
 
@@ -63,11 +63,16 @@ require_once("../partials/head.php");
                                 ?>
                                     <tr>
                                         <td><?php echo $payments->code; ?></td>
-                                        <td>Ksh <?php echo $payments->amt; ?></td>
+                                        <td><?php echo number_format($payments->amt); ?> VND</td>
                                         <td><?php echo $payments->cust_name; ?></td>
                                         <td><?php echo $payments->payment_means; ?></td>
-                                        <td><?php echo date('d M Y g:ia', strtotime($payments->created_at)); ?></td>
-                                        <td><?php echo $payments->service_paid; ?></td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($payments->created_at)); ?></td>
+                                        <td>
+                                            <?php
+                                            // Dịch vụ: nếu là "Resturant Sales" thì hiển thị "Nhà hàng", còn lại giữ nguyên
+                                            echo ($payments->service_paid == 'Resturant Sales' || $payments->service_paid == 'Nhà hàng') ? 'Nhà hàng' : htmlspecialchars($payments->service_paid);
+                                            ?>
+                                        </td>
                                     </tr>
                                 <?php
                                 } ?>

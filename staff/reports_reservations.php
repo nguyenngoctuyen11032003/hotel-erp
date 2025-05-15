@@ -24,14 +24,14 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Reservation And Accomodations Reports </h1>
+                            <h1>Báo cáo đặt phòng & lưu trú</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Reports</a></li>
-                                <li class="breadcrumb-item active">Reservations</li>
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                <li class="breadcrumb-item"><a href="#">Báo cáo</a></li>
+                                <li class="breadcrumb-item active">Đặt phòng</li>
                             </ol>
                         </div>
                     </div>
@@ -45,14 +45,14 @@ require_once("../partials/head.php");
                         <table id="reports" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Number</th>
-                                    <th>Type</th>
-                                    <th>Check In</th>
-                                    <th>Check Out</th>
-                                    <th>Customer Name</th>
-                                    <th>ID No</th>
-                                    <th>Payment Status</th>
-                                    <th>Reserved On </th>
+                                    <th>Số phòng</th>
+                                    <th>Loại phòng</th>
+                                    <th>Ngày nhận phòng</th>
+                                    <th>Ngày trả phòng</th>
+                                    <th>Họ tên khách hàng</th>
+                                    <th>CMND/CCCD</th>
+                                    <th>Trạng thái thanh toán</th>
+                                    <th>Ngày đặt</th>
                                 </tr>
                             </thead>
 
@@ -67,12 +67,28 @@ require_once("../partials/head.php");
                                     <tr>
                                         <td><?php echo $reservation->room_number; ?></td>
                                         <td><?php echo $reservation->room_type; ?></td>
-                                        <td><?php echo date('d-M-Y', strtotime($reservation->check_in)); ?></td>
-                                        <td><?php echo date('d-M-Y', strtotime($reservation->check_out)); ?></td>
+                                        <td><?php echo date('d/m/Y', strtotime($reservation->check_in)); ?></td>
+                                        <td><?php echo date('d/m/Y', strtotime($reservation->check_out)); ?></td>
                                         <td><?php echo $reservation->cust_name; ?></td>
                                         <td><?php echo $reservation->cust_id; ?></td>
-                                        <td><?php echo $reservation->status; ?></td>
-                                        <td><?php echo date('d-M-Y g:ia', strtotime($reservation->created_at)); ?></td>
+                                        <td>
+                                            <?php
+                                            if ($reservation->status == 'Paid') {
+                                                echo '<span class="badge badge-success">Đã thanh toán</span>';
+                                            } elseif ($reservation->status == 'Pending') {
+                                                echo '<span class="badge badge-warning">Chờ thanh toán</span>';
+                                            } elseif ($reservation->status == 'Checked In') {
+                                                echo '<span class="badge badge-primary">Đã nhận phòng</span>';
+                                            } elseif ($reservation->status == 'Checked Out') {
+                                                echo '<span class="badge badge-info">Đã trả phòng</span>';
+                                            } elseif ($reservation->status == 'Cancelled') {
+                                                echo '<span class="badge badge-danger">Đã hủy</span>';
+                                            } else {
+                                                echo '<span class="badge badge-secondary">'.htmlspecialchars($reservation->status).'</span>';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($reservation->created_at)); ?></td>
                                     </tr>
                                 <?php
                                 } ?>

@@ -278,13 +278,13 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Đặt chỗ </h1>
+                            <h1>Quản lý đặt phòng</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Reservations</li>
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                <li class="breadcrumb-item active">Đặt phòng</li>
                             </ol>
                         </div>
                     </div>
@@ -296,14 +296,14 @@ require_once("../partials/head.php");
                     <form class="form-inline">
                     </form>
                     <div class="text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-room">Add Reservation</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-room">Thêm đặt phòng</button>
                     </div>
                     <!-- Add  Modal -->
                     <div class="modal fade" id="add-room">
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Fill All Values </h4>
+                                    <h4 class="modal-title">Điền đầy đủ thông tin</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -320,9 +320,9 @@ require_once("../partials/head.php");
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Room Number</label>
+                                                <label for="inputEmail4">Số phòng</label>
                                                 <select id="RNumber" onchange="getRoomDetails(this.value);" class='form-control' name="room_number" id="">
-                                                    <option selected>Select Room Number</option>
+                                                    <option selected>Chọn số phòng</option>
                                                     <?php
                                                     $ret = "SELECT * FROM `rooms` ";
                                                     $stmt = $mysqli->prepare($ret);
@@ -337,57 +337,57 @@ require_once("../partials/head.php");
                                                 <input type="hidden" name="room_id" id="RID" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Room Cost</label>
+                                                <label for="inputEmail4">Giá phòng</label>
                                                 <input type="text" readonly id="RCost" name="room_cost" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Room Type</label>
+                                                <label for="inputEmail4">Loại phòng</label>
                                                 <input type="text" readonly id="RType" name="room_type" class="form-control">
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Check In</label>
+                                                <label for="inputEmail4">Ngày nhận phòng</label>
                                                 <input type="date" name="check_in" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Check Out</label>
+                                                <label for="inputEmail4">Ngày trả phòng</label>
                                                 <input type="date" name="check_out" class="form-control">
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Customer Full Name</label>
+                                                <label for="inputEmail4">Họ tên khách hàng</label>
                                                 <input type="text" name="cust_name" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Customer National ID Number</label>
+                                                <label for="inputEmail4">Số CMND/CCCD</label>
                                                 <input type="text" name="cust_id" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Customer Phone</label>
+                                                <label for="inputEmail4">Số điện thoại</label>
                                                 <input type="text" name="cust_phone" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Customer Email</label>
+                                                <label for="inputEmail4">Email</label>
                                                 <input type="email" name="cust_email" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Customer Address</label>
+                                                <label for="inputEmail4">Địa chỉ</label>
                                                 <input type="text" name="cust_adr" class="form-control">
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="submit" name="Add_Reservation" class="btn btn-warning mt-3">Submit</button>
+                                            <button type="submit" name="Add_Reservation" class="btn btn-warning mt-3">Thêm</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
                         </div>
@@ -399,18 +399,17 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Number</th>
-                                    <th>Type</th>
-                                    <th>Check In</th>
-                                    <th>Check Out</th>
-                                    <th>Name</th>
-                                    <th>ID No</th>
-                                    <th>Status</th>
-                                    <th>Reserved On </th>
-                                    <th>Action</th>
+                                    <th>Số phòng</th>
+                                    <th>Loại phòng</th>
+                                    <th>Ngày nhận phòng</th>
+                                    <th>Ngày trả phòng</th>
+                                    <th>Họ tên</th>
+                                    <th>CMND/CCCD</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <?php
                                 $ret = "SELECT * FROM `reservations` ORDER BY `reservations`.`created_at` DESC";
@@ -426,16 +425,33 @@ require_once("../partials/head.php");
                                         <td><?php echo $reservation->check_out; ?></td>
                                         <td><?php echo $reservation->cust_name; ?></td>
                                         <td><?php echo $reservation->cust_id; ?></td>
-                                        <td><?php echo $reservation->status; ?></td>
+                                        <td>
+                                            <?php
+                                            // Dịch trạng thái Pending sang tiếng Việt
+                                            if ($reservation->status == 'Pending') {
+                                                echo '<span class="badge badge-warning">Chờ xác nhận</span>';
+                                            } elseif ($reservation->status == 'Paid') {
+                                                echo '<span class="badge badge-success">Đã thanh toán</span>';
+                                            } elseif ($reservation->status == 'Checked In') {
+                                                echo '<span class="badge badge-primary">Đã nhận phòng</span>';
+                                            } elseif ($reservation->status == 'Checked Out') {
+                                                echo '<span class="badge badge-info">Đã trả phòng</span>';
+                                            } elseif ($reservation->status == 'Cancelled') {
+                                                echo '<span class="badge badge-danger">Đã hủy</span>';
+                                            } else {
+                                                echo '<span class="badge badge-secondary">' . htmlspecialchars($reservation->status) . '</span>';
+                                            }
+                                            ?>
+                                        </td>
                                         <td><?php echo date('d M Y', strtotime($reservation->created_at)); ?></td>
                                         <td>
-                                            <a class="badge badge-primary" data-toggle="modal" href="#update-<?php echo $reservation->id; ?>">Update</a>
+                                            <a class="badge badge-primary" data-toggle="modal" href="#update-<?php echo $reservation->id; ?>">Cập nhật</a>
                                             <!-- Update Modal -->
                                             <div class="modal fade" id="update-<?php echo $reservation->id; ?>">
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Update <?php echo $reservation->cust_name; ?> Reservation</h4>
+                                                            <h4 class="modal-title">Cập nhật đặt phòng: <?php echo $reservation->cust_name; ?></h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -452,62 +468,62 @@ require_once("../partials/head.php");
                                                                 </div>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Room Number</label>
+                                                                        <label for="inputEmail4">Số phòng</label>
                                                                         <input type="text" readonly value=<?php echo $reservation->room_number; ?> id="roomCost" name="room_number" class="form-control">
                                                                         <input type="hidden" name="room_id" value="<?php echo $reservation->room_id; ?>" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Room Cost</label>
+                                                                        <label for="inputEmail4">Giá phòng</label>
                                                                         <input type="text" readonly value=<?php echo $reservation->room_cost; ?> id="roomCost" name="room_cost" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Room Type</label>
+                                                                        <label for="inputEmail4">Loại phòng</label>
                                                                         <input type="text" readonly value=<?php echo $reservation->room_type; ?> id="roomType" name="room_type" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <hr>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Check In</label>
+                                                                        <label for="inputEmail4">Ngày nhận phòng</label>
                                                                         <input type="date" value="<?php echo $reservation->check_in; ?>" name="check_in" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Check Out</label>
+                                                                        <label for="inputEmail4">Ngày trả phòng</label>
                                                                         <input type="date" value="<?php echo $reservation->check_out; ?>" name="check_out" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <hr>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Customer Full Name</label>
+                                                                        <label for="inputEmail4">Họ tên khách hàng</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_name; ?>" name="cust_name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Customer National ID Number</label>
+                                                                        <label for="inputEmail4">Số CMND/CCCD</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_id; ?>" name="cust_id" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Customer Phone</label>
+                                                                        <label for="inputEmail4">Số điện thoại</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_phone; ?>" name="cust_phone" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Customer Email</label>
+                                                                        <label for="inputEmail4">Email</label>
                                                                         <input type="email" value="<?php echo $reservation->cust_email; ?>" name="cust_email" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Customer Address</label>
+                                                                        <label for="inputEmail4">Địa chỉ</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_adr; ?>" name="cust_adr" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="Update_Reservation" class="btn p btn-primary mt-3">Submit</button>
+                                                                    <button type="submit" name="Update_Reservation" class="btn btn-primary mt-3">Cập nhật</button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -516,22 +532,22 @@ require_once("../partials/head.php");
 
                                            <!-- Staff Cant Delete Reservations -->
 
-                                            <a class="badge badge-success" data-toggle="modal" href="#vacate-<?php echo $reservation->id; ?>">Vacate Room</a>
+                                            <a class="badge badge-success" data-toggle="modal" href="#vacate-<?php echo $reservation->id; ?>">Trả phòng</a>
                                             <!-- Vacate Room Modal  -->
                                             <div class="modal fade" id="vacate-<?php echo $reservation->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">XÁC NHẬN</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Vacate Room <?php echo $reservation->room_number; ?> ?</h4>
+                                                            <h4>Trả phòng <?php echo $reservation->room_number; ?>?</h4>
                                                             <br>
-                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                            <a href="reservations.php?Vacate_Room=<?php echo $reservation->room_id; ?>&status=Vacant" class="text-center btn btn-danger"> Vacate Room </a>
+                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
+                                                            <a href="reservations.php?Vacate_Room=<?php echo $reservation->room_id; ?>&status=Vacant" class="text-center btn btn-danger"> Trả phòng </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -539,8 +555,7 @@ require_once("../partials/head.php");
                                             <!-- End Vacate Room Modal -->
                                         </td>
                                     </tr>
-                                <?php
-                                } ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>

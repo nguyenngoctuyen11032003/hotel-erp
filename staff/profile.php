@@ -12,42 +12,42 @@ if (isset($_POST['Update_Staff'])) {
         $id = mysqli_real_escape_string($mysqli, trim($_SESSION['id']));
     } else {
         $error = 1;
-        $err = "Staff ID  Cannot Be Empty";
+        $err = "ID nhân viên không được để trống";
     }
 
     if (isset($_POST['name']) && !empty($_POST['name'])) {
         $name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
     } else {
         $error = 1;
-        $err = "Staff Name Cannot Be Empty";
+        $err = "Tên nhân viên không được để trống";
     }
 
     if (isset($_POST['number']) && !empty($_POST['number'])) {
         $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
     } else {
         $error = 1;
-        $err = "Staff Number  Cannot Be Empty";
+        $err = "Mã nhân viên không được để trống";
     }
 
     if (isset($_POST['phone']) && !empty($_POST['phone'])) {
         $phone = mysqli_real_escape_string($mysqli, trim($_POST['phone']));
     } else {
         $error = 1;
-        $err = "Phone Cannot Be Empty";
+        $err = "Số điện thoại không được để trống";
     }
 
     if (isset($_POST['email']) && !empty($_POST['email'])) {
         $email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
     } else {
         $error = 1;
-        $err = "Email Cannot Be Empty";
+        $err = "Email không được để trống";
     }
 
     if (isset($_POST['adr']) && !empty($_POST['adr'])) {
         $adr = mysqli_real_escape_string($mysqli, trim($_POST['adr']));
     } else {
         $error = 1;
-        $err = "Address Cannot Be Empty";
+        $err = "Địa chỉ không được để trống";
     }
    
     if (!$error) {
@@ -57,10 +57,9 @@ if (isset($_POST['Update_Staff'])) {
         $rc = $stmt->bind_param('ssssss', $name, $number, $phone, $email, $adr, $id);
         $stmt->execute();
         if ($stmt) {
-            $success = "Updated" && header("refresh:1; url=profile.php");
+            $success = "Cập nhật thành công" && header("refresh:1; url=profile.php");
         } else {
-            //inject alert that task failed
-            $info = "Please Try Again Or Try Later";
+            $info = "Vui lòng thử lại hoặc thử lại sau";
         }
     }
 }
@@ -74,19 +73,19 @@ if (isset($_POST['change_password'])) {
         $old_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['old_password']))));
     } else {
         $error = 1;
-        $err = "Old Password Cannot Be Empty";
+        $err = "Mật khẩu cũ không được để trống";
     }
     if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
         $new_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['new_password']))));
     } else {
         $error = 1;
-        $err = "New Password Cannot Be Empty";
+        $err = "Mật khẩu mới không được để trống";
     }
     if (isset($_POST['confirm_password']) && !empty($_POST['confirm_password'])) {
         $confirm_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['confirm_password']))));
     } else {
         $error = 1;
-        $err = "Confirmation Password Cannot Be Empty";
+        $err = "Xác nhận mật khẩu không được để trống";
     }
 
     if (!$error) {
@@ -96,18 +95,18 @@ if (isset($_POST['change_password'])) {
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if ($old_password != $row['password']) {
-                $err =  "Please Enter Correct Old Password";
+                $err =  "Mật khẩu cũ không đúng";
             } elseif ($new_password != $confirm_password) {
-                $err = "Confirmation Password Does Not Match";
+                $err = "Xác nhận mật khẩu không khớp";
             } else {
                 $query = "UPDATE staffs SET  password =? WHERE id =?";
                 $stmt = $mysqli->prepare($query);
                 $rc = $stmt->bind_param('ss', $new_password, $id);
                 $stmt->execute();
                 if ($stmt) {
-                    $success = "Password Changed" && header("refresh:1; url=profile.php");
+                    $success = "Đổi mật khẩu thành công" && header("refresh:1; url=profile.php");
                 } else {
-                    $err = "Please Try Again Or Try Later";
+                    $err = "Vui lòng thử lại hoặc thử lại sau";
                 }
             }
         }
@@ -124,7 +123,8 @@ require_once('../partials/head.php');
 
         <!-- Main Sidebar Container -->
         <?php
-        require_once("../partials/admin_sidebar.php");
+        // SỬA LỖI: Chỉ include staff_sidebar.php cho nhân viên
+        require_once("../partials/staff_sidebar.php");
         $id = $_SESSION['id'];
         $ret = "SELECT * FROM `staffs` WHERE id ='$id' ";
         $stmt = $mysqli->prepare($ret);
@@ -142,8 +142,8 @@ require_once('../partials/head.php');
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Hồ sơ người dùng</li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                    <li class="breadcrumb-item active">Hồ sơ cá nhân</li>
                                 </ol>
                             </div>
                         </div>
@@ -157,7 +157,7 @@ require_once('../partials/head.php');
                                 <div class="card">
                                     <div class="card-header p-2">
                                         <ul class="nav nav-pills">
-                                            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Cài đặt</a></li>
+                                            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Thông tin cá nhân</a></li>
                                             <li class="nav-item"><a class="nav-link " href="#changePassword" data-toggle="tab">Đổi mật khẩu</a></li>
                                         </ul>
                                     </div><!-- /.card-header -->
@@ -185,13 +185,13 @@ require_once('../partials/head.php');
                                                             <input required type="text" value="<?php echo $staff->phone; ?>" name="phone" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="inputEmail4">Địa chỉ Email</label>
+                                                            <label for="inputEmail4">Email</label>
                                                             <input required type="text" value="<?php echo $staff->email; ?>" name="email" class="form-control">
                                                         </div>
 
                                                         <div class="form-group col-md-12">
                                                             <label for="inputEmail4">Địa chỉ</label>
-                                                            <input required type="text" value="<?php echo $staff->adr; ?>"" name=" adr" class="form-control">
+                                                            <input required type="text" value="<?php echo $staff->adr; ?>" name="adr" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="text-right">

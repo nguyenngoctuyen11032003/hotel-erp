@@ -26,12 +26,12 @@ if (isset($_POST['Check_In'])) {
         $att_stmt->bind_param('sssss', $att_id, $staff_id, $date, $check_in, $status);
         $att_stmt->execute();
         if($att_stmt) {
-            $success = "Đã check in thành công";
+            $success = "Đã chấm công vào thành công";
         } else {
             $err = "Vui lòng thử lại";
         }
     } else {
-        $err = "Bạn đã check in hôm nay rồi";
+        $err = "Bạn đã chấm công vào hôm nay rồi";
     }
 }
 
@@ -46,9 +46,9 @@ if (isset($_POST['Check_Out'])) {
     $stmt->bind_param('sss', $check_out, $staff_id, $date);
     $stmt->execute();
     if($stmt) {
-        $success = "Checked Out Successfully";
+        $success = "Đã chấm công ra thành công";
     } else {
-        $err = "Please Try Again";
+        $err = "Vui lòng thử lại";
     }
 }
 
@@ -75,7 +75,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Trang chủ</a></li>
                                 <li class="breadcrumb-item active">Chấm công</li>
                             </ol>
                         </div>
@@ -113,21 +113,21 @@ require_once('../partials/head.php');
                                         <?php if(!$today) { ?>
                                             <form method="POST">
                                                 <button type="submit" name="Check_In" class="btn btn-success btn-lg">
-                                                    <i class="fas fa-sign-in-alt"></i> Check In
+                                                    <i class="fas fa-sign-in-alt"></i> Chấm công vào
                                                 </button>
                                             </form>
                                         <?php } else if(!$today->check_out) { ?>
                                             <form method="POST">
                                                 <button type="submit" name="Check_Out" class="btn btn-danger btn-lg">
-                                                    <i class="fas fa-sign-out-alt"></i> Check Out
+                                                    <i class="fas fa-sign-out-alt"></i> Chấm công ra
                                                 </button>
                                             </form>
-                                            <p class="mt-3">Đã check in lúc: <?php echo date('H:i:s', strtotime($today->check_in)); ?></p>
+                                            <p class="mt-3">Đã chấm công vào lúc: <?php echo date('H:i:s', strtotime($today->check_in)); ?></p>
                                         <?php } else { ?>
                                             <div class="alert alert-info">
                                                 <h5>Bạn đã hoàn thành chấm công hôm nay</h5>
-                                                <p>Check in: <?php echo date('H:i:s', strtotime($today->check_in)); ?></p>
-                                                <p>Check out: <?php echo date('H:i:s', strtotime($today->check_out)); ?></p>
+                                                <p>Chấm công vào: <?php echo date('H:i:s', strtotime($today->check_in)); ?></p>
+                                                <p>Chấm công ra: <?php echo date('H:i:s', strtotime($today->check_out)); ?></p>
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -148,8 +148,8 @@ require_once('../partials/head.php');
                                         <thead>
                                             <tr>
                                                 <th>Ngày</th>
-                                                <th>Check In</th>
-                                                <th>Check Out</th>
+                                                <th>Giờ vào</th>
+                                                <th>Giờ ra</th>
                                                 <th>Trạng thái</th>
                                             </tr>
                                         </thead>
@@ -165,7 +165,15 @@ require_once('../partials/head.php');
                                                 <td><?php echo date('d/m/Y', strtotime($record->date)); ?></td>
                                                 <td><?php echo $record->check_in ? date('H:i:s', strtotime($record->check_in)) : '-'; ?></td>
                                                 <td><?php echo $record->check_out ? date('H:i:s', strtotime($record->check_out)) : '-'; ?></td>
-                                                <td><?php echo $record->status; ?></td>
+                                                <td>
+                                                    <?php
+                                                    if ($record->status == 'Present') echo '<span class="badge badge-success">Có mặt</span>';
+                                                    elseif ($record->status == 'Absent') echo '<span class="badge badge-danger">Vắng mặt</span>';
+                                                    elseif ($record->status == 'Late') echo '<span class="badge badge-warning">Đi muộn</span>';
+                                                    elseif ($record->status == 'Leave') echo '<span class="badge badge-info">Nghỉ phép</span>';
+                                                    else echo '<span class="badge badge-secondary">'.htmlspecialchars($record->status).'</span>';
+                                                    ?>
+                                                </td>
                                             </tr>
                                             <?php } ?>
                                         </tbody>
@@ -193,4 +201,4 @@ require_once('../partials/head.php');
     updateTime(); // Initial update
     </script>
 </body>
-</html> 
+</html>

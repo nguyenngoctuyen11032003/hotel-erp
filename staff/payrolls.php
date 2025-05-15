@@ -25,14 +25,14 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Quản lý lương của tôi </h1>
+                            <h1>Bảng lương của tôi</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="">HRM</a></li>
-                                <li class="breadcrumb-item active">Lương</li>
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                <li class="breadcrumb-item"><a href="#">Nhân sự</a></li>
+                                <li class="breadcrumb-item active">Bảng lương</li>
                             </ol>
                         </div>
                     </div>
@@ -41,40 +41,35 @@ require_once("../partials/head.php");
 
             <section class="content">
                 <div class="container-fluid">
-
                     <hr>
                     <div class="col-12">
                         <table id="reports" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Mã nhân viên</th>
+                                    <th>Mã lương</th>
                                     <th>Tháng</th>
                                     <th>Số tiền</th>
                                     <th>Tên nhân viên</th>
-                                    <th>Tạo vào</th>
+                                    <th>Ngày tạo</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <?php
                                 $staff = $_SESSION['id'];
                                 $ret = "SELECT * FROM `payrolls` WHERE staff_id = '$staff' ";
                                 $stmt = $mysqli->prepare($ret);
-                                $stmt->execute(); //ok
+                                $stmt->execute();
                                 $res = $stmt->get_result();
                                 while ($payrolls = $res->fetch_object()) {
                                 ?>
                                     <tr>
-                                        <td>
-                                            <?php echo $payrolls->code; ?>
-                                        </td>
+                                        <td><?php echo $payrolls->code; ?></td>
                                         <td><?php echo $payrolls->month; ?></td>
-                                        <td>Ksh <?php echo $payrolls->salary; ?></td>
+                                        <td><?php echo number_format($payrolls->salary); ?> VND</td>
                                         <td><?php echo $payrolls->staff_name; ?></td>
-                                        <td><?php echo date('d M Y g:i', strtotime($payrolls->created_at)); ?></td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($payrolls->created_at)); ?></td>
                                     </tr>
-                                <?php
-                                } ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>

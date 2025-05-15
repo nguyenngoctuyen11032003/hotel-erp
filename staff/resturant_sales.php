@@ -44,20 +44,15 @@ if (isset($_POST['Add_Sale'])) {
         $err = "Tên khách hàng không được để trống";
     }
 
-    if (isset($_POST['service_paid']) && !empty($_POST['service_paid'])) {
-        $service_paid = mysqli_real_escape_string($mysqli, trim($_POST['service_paid']));
-    } else {
-        $error = 1;
-        $err = "Dịch vụ đã thanh toán không được để trống";
-    }
-
     if (isset($_POST['month']) && !empty($_POST['month'])) {
         $month = mysqli_real_escape_string($mysqli, trim($_POST['month']));
     } else {
         $error = 1;
         $err = "Tháng thanh toán không được để trống";
     }
-    
+
+    $service_paid = 'Resturant Sales'; // Đảm bảo luôn là "Resturant Sales"
+
     /* Ngăn chặn nhập trùng */
     if (!$error) {
         // Ngăn chặn nhập trùng
@@ -71,9 +66,9 @@ if (isset($_POST['Add_Sale'])) {
                 //
             }
         } else {
-            $query = "INSERT INTO payments (id, code, payment_means, amt, cust_name, service_paid, month) VALUES (?,?,?,?,?,?,?)";
+            $query = "INSERT INTO payments (id, code, amt, cust_name, service_paid, payment_means, month) VALUES (?,?,?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('sssssss', $id, $code, $payment_means, $amt, $cust_name, $service_paid, $month);
+            $rc = $stmt->bind_param('sssssss', $id, $code, $amt, $cust_name, $service_paid, $payment_means, $month);
             $stmt->execute();
             if ($stmt) {
                 $success = "Đã thêm" && header("refresh:1; url=resturant_sales.php");
@@ -123,26 +118,21 @@ if (isset($_POST['Update_Sale'])) {
         $err = "Tên khách hàng không được để trống";
     }
 
-    if (isset($_POST['service_paid']) && !empty($_POST['service_paid'])) {
-        $service_paid = mysqli_real_escape_string($mysqli, trim($_POST['service_paid']));
-    } else {
-        $error = 1;
-        $err = "Dịch vụ đã thanh toán không được để trống";
-    }
-
     if (isset($_POST['month']) && !empty($_POST['month'])) {
         $month = mysqli_real_escape_string($mysqli, trim($_POST['month']));
     } else {
         $error = 1;
         $err = "Tháng thanh toán không được để trống";
     }
-    
+
+    $service_paid = 'Resturant Sales'; // Đảm bảo luôn là "Resturant Sales"
+
     /* Ngăn chặn nhập trùng */
     if (!$error) {
 
-        $query = "UPDATE payments SET  code =?, payment_means =?, amt =?, cust_name =?, service_paid =?, month =? WHERE id =?";
+        $query = "UPDATE payments SET code=?, amt=?, cust_name=?, service_paid=?, payment_means=?, month=? WHERE id=?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('sssssss', $code, $payment_means, $amt, $cust_name, $service_paid, $month, $id);
+        $rc = $stmt->bind_param('sssssss', $code, $amt, $cust_name, $service_paid, $payment_means, $month, $id);
         $stmt->execute();
         if ($stmt) {
             $success = "Đã cập nhật" && header("refresh:1; url=resturant_sales.php");
@@ -196,7 +186,7 @@ require_once("../partials/head.php");
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Điền tất cả các giá trị </h4>
+                                    <h4 class="modal-title">Điền đầy đủ thông tin</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -208,7 +198,7 @@ require_once("../partials/head.php");
                                                 <label for="inputEmail4">Id</label>
                                                 <input type="text" name="id" value="<?php echo $ID; ?>" class="form-control">
                                                 <input type="text" name="month" value="<?php echo date('M'); ?>" class="form-control">
-                                                <input type="text" name="service_paid" value="Doanh thu nhà hàng" class="form-control">
+                                                <input type="text" name="service_paid" value="Resturant Sales" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
@@ -236,7 +226,7 @@ require_once("../partials/head.php");
                                         </div>
 
                                         <div class="text-right">
-                                            <button type="submit" name="Add_Sale" class="btn btn-primary mt-3">Gửi</button>
+                                            <button type="submit" name="Add_Sale" class="btn btn-primary mt-3">Thêm</button>
                                         </div>
                                     </form>
                                 </div>
@@ -257,12 +247,12 @@ require_once("../partials/head.php");
                                     <th>Tên khách hàng</th>
                                     <th>Phương thức thanh toán</th>
                                     <th>Ngày</th>
-                                    <th>Hành động</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $ret = "SELECT * FROM `payments` WHERE service_paid ='Doanh thu nhà hàng' ORDER BY `payments`.`created_at` ASC ";
+                                $ret = "SELECT * FROM payments WHERE service_paid = 'Resturant Sales' ORDER BY created_at DESC";
                                 $stmt = $mysqli->prepare($ret);
                                 $stmt->execute(); //ok
                                 $res = $stmt->get_result();
@@ -270,7 +260,7 @@ require_once("../partials/head.php");
                                 ?>
                                     <tr>
                                         <td><?php echo $payments->code; ?></td>
-                                        <td><?php echo $payments->amt; ?></td>
+                                        <td><?php echo number_format($payments->amt); ?> VND</td>
                                         <td><?php echo $payments->cust_name; ?></td>
                                         <td><?php echo $payments->payment_means; ?></td>
                                         <td><?php echo date('d M Y g:ia', strtotime($payments->created_at)); ?></td>
@@ -287,7 +277,7 @@ require_once("../partials/head.php");
                                                                         <h4 class="text-center">
                                                                             <img height="100" width="200" src="../public/uploads/sys_logo/logo.png" class="img-thumbnail img-fluid" alt="Logo hệ thống">
                                                                             <br>
-                                                                            <small class="float-right">Ngày: <?php echo date('d M Y'); ?></small>
+                                                                            <small class="float-right">Ngày: <?php echo date('d/m/Y'); ?></small>
                                                                         </h4>
                                                                         <h4>
                                                                             NT Hotels Inc
@@ -310,8 +300,8 @@ require_once("../partials/head.php");
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td><?php echo $payments->cust_name; ?></td>
-                                                                                    <td>Ksh <?php echo $payments->amt; ?></td>
-                                                                                    <td><?php echo $payments->service_paid; ?></td>
+                                                                                    <td><?php echo number_format($payments->amt); ?> VND</td>
+                                                                                    <td>Nhà hàng</td>
                                                                                     <td><?php echo $payments->payment_means; ?></td>
                                                                                     <td><?php echo $payments->code; ?></td>
                                                                                 </tr>
@@ -349,7 +339,7 @@ require_once("../partials/head.php");
                                                                         <label for="inputEmail4">Id</label>
                                                                         <input type="text" name="id" value="<?php echo $payments->id; ?>" class="form-control">
                                                                         <input type="text" name="month" value="<?php echo date('M'); ?>" class="form-control">
-                                                                        <input type="text" name="service_paid" value="Doanh thu nhà hàng" class="form-control">
+                                                                        <input type="text" name="service_paid" value="Resturant Sales" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row mb-4">
@@ -380,7 +370,7 @@ require_once("../partials/head.php");
                                                                 </div>
 
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="Update_Sale" class="btn btn-primary mt-3">Gửi</button>
+                                                                    <button type="submit" name="Update_Sale" class="btn btn-primary mt-3">Cập nhật</button>
                                                                 </div>
                                                             </form>
                                                         </div>

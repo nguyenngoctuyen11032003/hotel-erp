@@ -17,9 +17,9 @@ if (isset($_POST['Add_Customer'])) {
     $stmt->bind_param('ssssss', $name, $phone, $email, $address, $id_number, $created_at);
     $stmt->execute();
     if ($stmt) {
-        $success = "Customer Added Successfully";
+        $success = "Thêm khách hàng thành công";
     } else {
-        $err = "Please Try Again";
+        $err = "Vui lòng thử lại";
     }
 }
 
@@ -36,9 +36,9 @@ if (isset($_POST['Update_Customer'])) {
     $stmt->bind_param('ssssss', $name, $phone, $email, $address, $id_number, $id);
     $stmt->execute();
     if ($stmt) {
-        $success = "Customer Updated Successfully";
+        $success = "Cập nhật khách hàng thành công";
     } else {
-        $err = "Please Try Again";
+        $err = "Vui lòng thử lại";
     }
 }
 
@@ -49,9 +49,9 @@ if (isset($_GET['Delete_Customer'])) {
     $stmt->bind_param('s', $id);
     $stmt->execute();
     if ($stmt) {
-        $success = "Customer Deleted Successfully";
+        $success = "Xóa khách hàng thành công";
     } else {
-        $err = "Please Try Again";
+        $err = "Vui lòng thử lại";
     }
 }
 
@@ -78,7 +78,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Trang chủ</a></li>
                                 <li class="breadcrumb-item active">Khách hàng</li>
                             </ol>
                         </div>
@@ -161,11 +161,11 @@ require_once('../partials/head.php');
                                                     <th style="width: 15%">Họ tên</th>
                                                     <th style="width: 10%">Số điện thoại</th>
                                                     <th style="width: 15%">Email</th>
-                                                    <th style="width: 10%">CCCD</th>
+                                                    <th style="width: 10%">CMND/CCCD</th>
                                                     <th style="width: 15%">Địa chỉ</th>
                                                     <th style="width: 8%">Số phòng</th>
-                                                    <th style="width: 8%">Check-in</th>
-                                                    <th style="width: 8%">Check-out</th>
+                                                    <th style="width: 8%">Nhận phòng</th>
+                                                    <th style="width: 8%">Trả phòng</th>
                                                     <th style="width: 8%">Trạng thái</th>
                                                     <th style="width: 8%">Thao tác</th>
                                                 </tr>
@@ -189,15 +189,21 @@ require_once('../partials/head.php');
                                                         <td><?php echo date('d/m/Y', strtotime($reservation->check_in)); ?></td>
                                                         <td><?php echo date('d/m/Y', strtotime($reservation->check_out)); ?></td>
                                                         <td>
-                                                            <?php if($reservation->status == 'Pending') { ?>
-                                                                <span class="badge badge-warning">Chờ xác nhận</span>
-                                                            <?php } else if($reservation->status == 'Checked In') { ?>
-                                                                <span class="badge badge-success">Đã nhận phòng</span>
-                                                            <?php } else if($reservation->status == 'Checked Out') { ?>
-                                                                <span class="badge badge-info">Đã trả phòng</span>
-                                                            <?php } else if($reservation->status == 'Cancelled') { ?>
-                                                                <span class="badge badge-danger">Đã hủy</span>
-                                                            <?php } ?>
+                                                            <?php
+                                                            if ($reservation->status == 'Pending') {
+                                                                echo '<span class="badge badge-warning">Chờ xác nhận</span>';
+                                                            } elseif ($reservation->status == 'Paid') {
+                                                                echo '<span class="badge badge-success">Đã thanh toán</span>';
+                                                            } elseif ($reservation->status == 'Checked In') {
+                                                                echo '<span class="badge badge-primary">Đã nhận phòng</span>';
+                                                            } elseif ($reservation->status == 'Checked Out') {
+                                                                echo '<span class="badge badge-info">Đã trả phòng</span>';
+                                                            } elseif ($reservation->status == 'Cancelled') {
+                                                                echo '<span class="badge badge-danger">Đã hủy</span>';
+                                                            } else {
+                                                                echo '<span class="badge badge-secondary">' . htmlspecialchars($reservation->status) . '</span>';
+                                                            }
+                                                            ?>
                                                         </td>
                                                         <td>
                                                             <a href="reservations.php?view=<?php echo $reservation->id; ?>" class="btn btn-sm btn-info">Chi tiết</a>
@@ -215,7 +221,6 @@ require_once('../partials/head.php');
             </section>
         </div>
     </div>
-
     <?php require_once('../partials/scripts.php'); ?>
 </body>
-</html> 
+</html>

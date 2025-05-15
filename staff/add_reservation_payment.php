@@ -161,17 +161,17 @@ require_once("../partials/head.php");
                                         <td><?php echo $reservation->check_out; ?></td>
                                         <td><?php echo $reservation->cust_name; ?></td>
                                         <td><?php echo $days_stayed; ?> ngày</td>
-                                        <td>Ksh <?php echo $amount; ?></td>
-                                        <td><?php echo date('d M Y', strtotime($reservation->created_at)); ?></td>
+                                        <td><?php echo number_format($amount); ?> VND</td>
+                                        <td><?php echo date('d/m/Y', strtotime($reservation->created_at)); ?></td>
                                         <td>
-                                            <a class="badge badge-warning" data-toggle="modal" href="#pay_<?php echo $reservation->id; ?>"> Thanh toán phí đặt phòng </a>
+                                            <a class="badge badge-warning" data-toggle="modal" href="#pay_<?php echo $reservation->id; ?>"> Thanh toán </a>
                                             <!-- Payment Modal -->
                                             <div class="modal fade " id="pay_<?php echo $reservation->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Điền đầy đủ thông tin </h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h4 class="modal-title">Điền đầy đủ thông tin</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -185,7 +185,6 @@ require_once("../partials/head.php");
                                                                         <input type="text" name="service_paid" value="Reservations" class="form-control">
                                                                         <input type="text" name="r_id" value="<?php echo $reservation->id; ?>" class="form-control">
                                                                         <input type="text" name="status" value="Paid" class="form-control">
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row mb-4">
@@ -194,10 +193,9 @@ require_once("../partials/head.php");
                                                                         <input required type="text" value="<?php echo $reservation->cust_name; ?>" readonly name="cust_name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Số tiền đặt phòng</label>
+                                                                        <label for="inputEmail4">Số tiền thanh toán</label>
                                                                         <input required type="text" value="<?php echo $amount; ?>" readonly name="amt" class="form-control">
                                                                     </div>
-
                                                                     <div class="form-group col-md-6">
                                                                         <label for="inputEmail4">Mã thanh toán</label>
                                                                         <input required type="text" value="<?php echo $paycode; ?>" name="code" class="form-control">
@@ -212,7 +210,6 @@ require_once("../partials/head.php");
                                                                         </select>
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="text-right">
                                                                     <button type="submit" name="Pay_Reservation" class="btn btn-primary mt-3">Xác nhận</button>
                                                                 </div>

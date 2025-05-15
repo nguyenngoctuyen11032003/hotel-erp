@@ -30,8 +30,8 @@ require_once("../partials/head.php");
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="reservations.php">Đặt phòng </a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                <li class="breadcrumb-item"><a href="reservations.php">Đặt phòng</a></li>
                                 <li class="breadcrumb-item active">Thanh toán</li>
                             </ol>
                         </div>
@@ -51,12 +51,12 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Code</th>
-                                    <th>Amount</th>
-                                    <th>Customer Name</th>
-                                    <th>Payment Means</th>
-                                    <th>Paid On</th>
-                                    <th>Manage</th>
+                                    <th>Mã thanh toán</th>
+                                    <th>Số tiền</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Phương thức thanh toán</th>
+                                    <th>Ngày thanh toán</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
 
@@ -70,12 +70,12 @@ require_once("../partials/head.php");
                                 ?>
                                     <tr>
                                         <td><?php echo $payments->code; ?></td>
-                                        <td>Ksh <?php echo $payments->amt; ?></td>
+                                        <td><?php echo number_format($payments->amt); ?> VND</td>
                                         <td><?php echo $payments->cust_name; ?></td>
                                         <td><?php echo $payments->payment_means; ?></td>
-                                        <td><?php echo date('d M Y', strtotime($payments->created_at)); ?></td>
+                                        <td><?php echo date('d/m/Y', strtotime($payments->created_at)); ?></td>
                                         <td>
-                                            <a class="badge badge-success" data-toggle="modal" href="#receipt-<?php echo $payments->id; ?>">Print Receipt</a>
+                                            <a class="badge badge-success" data-toggle="modal" href="#receipt-<?php echo $payments->id; ?>">In hóa đơn</a>
                                             <!-- Print Receipt -->
                                             <div class="modal fade" id="receipt-<?php echo $payments->id; ?>">
                                                 <div class="modal-dialog modal-xl">
@@ -87,30 +87,29 @@ require_once("../partials/head.php");
                                                                         <h4 class="text-center">
                                                                             <img height="100" width="200" src="../public/uploads/sys_logo/logo.png" class="img-thumbnail img-fluid" alt="System Logo">
                                                                             <br>
-                                                                            <small class="float-right">Date: <?php echo date('d M Y');?></small>
+                                                                            <small class="float-right">Ngày: <?php echo date('d/m/Y');?></small>
                                                                         </h4>
                                                                         <h4>
                                                                         NT Hotels Inc
                                                                         </h4>
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="row">
                                                                     <div class="col-12 table-responsive">
                                                                         <table class="table">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Customer Name</th>
-                                                                                    <th>Amount Paid</th>
-                                                                                    <th>Service Paid</th>
-                                                                                    <th>Payment Means</th>
-                                                                                    <th>Payment Code</th>
+                                                                                    <th>Tên khách hàng</th>
+                                                                                    <th>Số tiền đã thanh toán</th>
+                                                                                    <th>Dịch vụ đã thanh toán</th>
+                                                                                    <th>Phương thức thanh toán</th>
+                                                                                    <th>Mã thanh toán</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td><?php echo $payments->cust_name;?></td>
-                                                                                    <td>Ksh <?php echo $payments->amt;?></td>
+                                                                                    <td><?php echo number_format($payments->amt); ?> VND</td>
                                                                                     <td><?php echo $payments->service_paid;?></td>
                                                                                     <td><?php echo $payments->payment_means;?></td>
                                                                                     <td><?php echo $payments->code;?></td>
@@ -119,13 +118,11 @@ require_once("../partials/head.php");
                                                                         </table>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            
-                                                            <button id="print" onclick="printContent('Print_Receipt');"  type="button" class="btn btn-primary" >Print</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                            <button id="print" onclick="printContent('Print_Receipt');"  type="button" class="btn btn-primary" >In</button>
                                                         </div>
                                                     </div>
                                                 </div>
