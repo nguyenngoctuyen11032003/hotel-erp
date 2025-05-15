@@ -67,7 +67,12 @@ require_once("../partials/head.php");
                                         <td><?php echo $payments->cust_name; ?></td>
                                         <td><?php echo $payments->payment_means; ?></td>
                                         <td><?php echo date('d/m/Y H:i', strtotime($payments->created_at)); ?></td>
-                                        <td><?php echo $payments->service_paid; ?></td>
+                                        <td>
+                                            <?php
+                                            // Dịch vụ: nếu là "Resturant Sales" thì hiển thị "Nhà hàng", còn lại giữ nguyên
+                                            echo ($payments->service_paid == 'Resturant Sales') ? 'Nhà hàng' : htmlspecialchars($payments->service_paid);
+                                            ?>
+                                        </td>
                                     </tr>
                                 <?php
                                 } ?>

@@ -449,7 +449,24 @@ require_once("../partials/head.php");
                                         <td><?php echo $reservation->check_out; ?></td>
                                         <td><?php echo $reservation->cust_name; ?></td>
                                         <td><?php echo $reservation->cust_id; ?></td>
-                                        <td><?php echo $reservation->status; ?></td>
+                                        <td>
+                                            <?php
+                                            // Dịch trạng thái Pending sang tiếng Việt
+                                            if ($reservation->status == 'Pending') {
+                                                echo '<span class="badge badge-warning">Chờ xác nhận</span>';
+                                            } elseif ($reservation->status == 'Paid') {
+                                                echo '<span class="badge badge-success">Đã thanh toán</span>';
+                                            } elseif ($reservation->status == 'Checked In') {
+                                                echo '<span class="badge badge-primary">Đã nhận phòng</span>';
+                                            } elseif ($reservation->status == 'Checked Out') {
+                                                echo '<span class="badge badge-info">Đã trả phòng</span>';
+                                            } elseif ($reservation->status == 'Cancelled') {
+                                                echo '<span class="badge badge-danger">Đã hủy</span>';
+                                            } else {
+                                                echo '<span class="badge badge-secondary">' . htmlspecialchars($reservation->status) . '</span>';
+                                            }
+                                            ?>
+                                        </td>
                                         <td><?php echo date('d M Y', strtotime($reservation->created_at)); ?></td>
                                         <td>
                                             <a class="badge badge-primary" data-toggle="modal" href="#update-<?php echo $reservation->id; ?>">Cập nhật</a>

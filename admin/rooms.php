@@ -278,10 +278,8 @@ require_once("../partials/head.php");
 
             <section class="content">
                 <div class="container-fluid">
-                    <form class="form-inline">
-                    </form>
-                    <div class="text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#import_modal">Import Phòng</button>
+                    <div class="text-right mb-3">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#import_modal">Nhập phòng</button>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-room">Thêm phòng</button>
                     </div>
                     <!-- Add  Modal -->
@@ -406,19 +404,18 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Mã phòng</th>
+                                    <th>Số phòng</th>
                                     <th>Loại phòng</th>
                                     <th>Trạng thái phòng</th>
                                     <th>Giá phòng</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <?php
                                 $ret = "SELECT * FROM `rooms` ";
                                 $stmt = $mysqli->prepare($ret);
-                                $stmt->execute(); //ok
+                                $stmt->execute();
                                 $res = $stmt->get_result();
                                 while ($rooms = $res->fetch_object()) {
                                 ?>
@@ -427,14 +424,14 @@ require_once("../partials/head.php");
                                         <td><?php echo $rooms->type; ?></td>
                                         <td>
                                             <?php
-                                            if ($rooms->status == 'Occupied') {
-                                                echo "<span class='badge bg-danger'>$rooms->status</span>";
+                                            if ($rooms->status == 'Occupied' || $rooms->status == 'Đã có khách') {
+                                                echo "<span class='badge bg-danger'>Đã có khách</span>";
                                             } else {
-                                                echo "<span class='badge bg-warning'>$rooms->status</span>";
+                                                echo "<span class='badge bg-warning'>Trống</span>";
                                             }
                                             ?>
                                         </td>
-                                        <td>Ksh <?php echo $rooms->price; ?></td>
+                                        <td><?php echo number_format($rooms->price); ?> VND</td>
                                         <td>
                                             <a class="badge bg-success" data-toggle="modal" href="#view-<?php echo $rooms->id; ?>"> <i class="fas fa-eye"></i> Xem </a>
                                             <!-- View Modal -->
@@ -442,38 +439,28 @@ require_once("../partials/head.php");
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title"><?php echo $rooms->number; ?> - Thông tin chi tiết</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h4 class="modal-title"><?php echo $rooms->number; ?> - Chi tiết</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center">
                                                             <?php
                                                             if ($rooms->image == '') {
-                                                                //Load Default Image
-                                                                echo "<img src='../public/uploads/sys_logo/logo.png'  class='text-center img-fluid ' alt='Room Image'>";
+                                                                echo "<img src='../public/uploads/sys_logo/logo.png'  class='text-center img-fluid ' alt='Hình ảnh phòng'>";
                                                             } else {
-                                                                echo "<img src='../public/uploads/rooms/$rooms->image'  class=' img-fluid ' alt='Room Image'>";
+                                                                echo "<img src='../public/uploads/rooms/$rooms->image'  class=' img-fluid ' alt='Hình ảnh phòng'>";
                                                             }
                                                             ?>
                                                         </div>
-                                                        <!-- /.card-header -->
                                                         <div class="card-body">
                                                             <table class="table table-sm">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>
-                                                                            Mã phòng
-                                                                        </th>
-                                                                        <th>
-                                                                            Giá phòng
-                                                                        </th>
-                                                                        <th>
-                                                                            Loại phòng
-                                                                        </th>
-                                                                        <th>
-                                                                            Trạng thái phòng
-                                                                        </th>
+                                                                        <th>Số phòng</th>
+                                                                        <th>Giá phòng</th>
+                                                                        <th>Loại phòng</th>
+                                                                        <th>Trạng thái</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -481,19 +468,18 @@ require_once("../partials/head.php");
                                                                         <td>
                                                                             <div class="td-content"><span class="badge badge-success"><?php echo $rooms->number; ?></span></div>
                                                                         </td>
-
                                                                         <td>
-                                                                            KSH <?php echo $rooms->price; ?>
+                                                                            <?php echo number_format($rooms->price); ?> VND
                                                                         </td>
                                                                         <td>
                                                                             <?php echo $rooms->type; ?>
                                                                         </td>
                                                                         <td>
                                                                             <?php
-                                                                            if ($rooms->status == 'Occupied') {
-                                                                                echo "<span class='badge bg-danger'>$rooms->status</span>";
+                                                                            if ($rooms->status == 'Occupied' || $rooms->status == 'Đã có khách') {
+                                                                                echo "<span class='badge bg-danger'>Đã có khách</span>";
                                                                             } else {
-                                                                                echo "<span class='badge bg-warning'>$rooms->status</span>";
+                                                                                echo "<span class='badge bg-warning'>Trống</span>";
                                                                             }
                                                                             ?>
                                                                         </td>
@@ -514,13 +500,13 @@ require_once("../partials/head.php");
                                             </div>
                                             <!-- End View Modal -->
 
-                                            <!-- Prevent Deleting / Updating Occupied Room -->
                                             <?php
-                                            if ($rooms->status == 'Occupied') {
+                                            if ($rooms->status == 'Occupied' || $rooms->status == 'Đã có khách') {
+                                                // Không cho phép cập nhật/xóa khi phòng đã có khách
                                             } else {
-                                                //Update And Delete
                                                 echo "<a class='badge bg-primary' href='#update-$rooms->id' data-toggle='modal'> <i class='fas fa-edit'></i> Cập nhật </a>";
-                                                echo "<a class='badge bg-danger text-danger' href='#delete-$rooms->id' data-toggle='modal'> <i class='fas fa-trash'></i> Xóa </a>";
+                                                // Nút xóa
+                                                echo "<a class='badge bg-danger' data-toggle='modal' href='#delete-$rooms->id'><i class='fas fa-trash'></i> Xóa</a>";
                                             }
                                             ?>
                                             <!-- Update Modal -->
@@ -596,30 +582,29 @@ require_once("../partials/head.php");
                                             </div>
                                             <!-- End Update Modal -->
 
-                                            <!-- Delete Confirmation -->
-                                            <div class="modal fade" id="delete-<?php echo $rooms->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <!-- Delete Modal -->
+                                            <div class="modal fade" id="delete-<?php echo $rooms->id; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteLabel-<?php echo $rooms->id; ?>" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">XÁC NHẬN</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title" id="deleteLabel-<?php echo $rooms->id; ?>">XÁC NHẬN</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Xóa phòng <?php echo $rooms->number; ?> ?</h4>
+                                                            <h4>Xóa phòng <?php echo $rooms->number; ?>?</h4>
                                                             <br>
-                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
-                                                            <a href="rooms.php?Delete_Room=<?php echo $rooms->id; ?>" class="text-center btn btn-danger"> Xóa </a>
+                                                            <button type="button" class="btn btn-success" data-dismiss="modal">Không</button>
+                                                            <a href="rooms.php?Delete_Room=<?php echo $rooms->id; ?>" class="btn btn-danger">Xóa</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- End Delete Confirmation -->
+                                            <!-- End Delete Modal -->
                                         </td>
                                     </tr>
-                                <?php
-                                } ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
