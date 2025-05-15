@@ -189,7 +189,7 @@ while ($sys = $res->fetch_object()) {
                         <?php
                         $ret = "SELECT * FROM `rooms`  WHERE status = 'Vacant' ORDER BY RAND() ";
                         $stmt = $mysqli->prepare($ret);
-                        $stmt->execute(); //ok
+                        $stmt->execute();
                         $res = $stmt->get_result();
                         while ($rooms = $res->fetch_object()) {
                             if ($rooms->image == '') {
@@ -205,7 +205,7 @@ while ($sys = $res->fetch_object()) {
                                     <div class="rooms_title">
                                         <h2><?php echo $rooms->type; ?></h2>
                                     </div>
-                                    <div class="rooms_price"><?php echo $rooms->price; ?> VND /<span>đêm</span></div>
+                                    <div class="rooms_price"><?php echo number_format($rooms->price); ?> VND /<span>đêm</span></div>
                                     <div class="button rooms_button mt-auto"><a data-toggle="modal" href="#book-<?php echo $rooms->id; ?>">Đặt ngay</a></div>
                                 </div>
                             </div>
@@ -234,7 +234,7 @@ while ($sys = $res->fetch_object()) {
                                             </div>
                                             <div class="form-row mb-4" style="display: none;">
                                                 <div class="form-group col-md-4">
-                                                    <label for="inputEmail4">Mã phòng</label>
+                                                    <label for="inputEmail4">Số phòng</label>
                                                     <input type="text" readonly value="<?php echo $rooms->number; ?>" name="room_number" class="form-control">
                                                 </div>
                                                 <div class="form-group col-md-4">
