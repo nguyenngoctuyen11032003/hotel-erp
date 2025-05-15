@@ -47,10 +47,10 @@ require_once("../partials/head.php");
                             <thead>
                                 <tr>
                                     <th>Mã nhân viên</th>
-                                    <th>Tên nhân viên</th>
-                                    <th>Email nhân viên</th>
-                                    <th>Số điện thoại nhân viên</th>
-                                    <th>Địa chỉ nhân viên</th>
+                                    <th>Họ tên nhân viên</th>
+                                    <th>Email</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
                                 </tr>
                             </thead>
 

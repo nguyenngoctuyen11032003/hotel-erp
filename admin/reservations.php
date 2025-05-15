@@ -301,7 +301,7 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Đặt phòng</h1>
+                            <h1>Quản lý đặt phòng</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -371,36 +371,36 @@ require_once("../partials/head.php");
                                         <hr>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Ngày nhận</label>
+                                                <label for="inputEmail4">Ngày nhận phòng</label>
                                                 <input type="date" name="check_in" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Ngày trả</label>
+                                                <label for="inputEmail4">Ngày trả phòng</label>
                                                 <input type="date" name="check_out" class="form-control">
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Họ và tên khách</label>
+                                                <label for="inputEmail4">Họ tên khách</label>
                                                 <input type="text" name="cust_name" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Số CMND khách</label>
+                                                <label for="inputEmail4">Số CMND/CCCD</label>
                                                 <input type="text" name="cust_id" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Số điện thoại khách</label>
+                                                <label for="inputEmail4">Số điện thoại</label>
                                                 <input type="text" name="cust_phone" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Email khách</label>
+                                                <label for="inputEmail4">Email</label>
                                                 <input type="email" name="cust_email" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Địa chỉ khách</label>
+                                                <label for="inputEmail4">Địa chỉ</label>
                                                 <input type="text" name="cust_adr" class="form-control">
                                             </div>
                                         </div>
@@ -424,10 +424,10 @@ require_once("../partials/head.php");
                                 <tr>
                                     <th>Số phòng</th>
                                     <th>Loại phòng</th>
-                                    <th>Ngày nhận</th>
-                                    <th>Ngày trả</th>
-                                    <th>Tên khách</th>
-                                    <th>Số CMND</th>
+                                    <th>Ngày nhận phòng</th>
+                                    <th>Ngày trả phòng</th>
+                                    <th>Họ tên khách</th>
+                                    <th>Số CMND/CCCD</th>
                                     <th>Trạng thái</th>
                                     <th>Ngày đặt</th>
                                     <th>Thao tác</th>
@@ -491,36 +491,36 @@ require_once("../partials/head.php");
                                                                 <hr>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Ngày nhận</label>
+                                                                        <label for="inputEmail4">Ngày nhận phòng</label>
                                                                         <input type="date" value="<?php echo $reservation->check_in; ?>" name="check_in" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Ngày trả</label>
+                                                                        <label for="inputEmail4">Ngày trả phòng</label>
                                                                         <input type="date" value="<?php echo $reservation->check_out; ?>" name="check_out" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <hr>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Họ và tên khách</label>
+                                                                        <label for="inputEmail4">Họ tên khách</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_name; ?>" name="cust_name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Số CMND khách</label>
+                                                                        <label for="inputEmail4">Số CMND/CCCD</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_id; ?>" name="cust_id" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Số điện thoại khách</label>
+                                                                        <label for="inputEmail4">Số điện thoại</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_phone; ?>" name="cust_phone" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Email khách</label>
+                                                                        <label for="inputEmail4">Email</label>
                                                                         <input type="email" value="<?php echo $reservation->cust_email; ?>" name="cust_email" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Địa chỉ khách</label>
+                                                                        <label for="inputEmail4">Địa chỉ</label>
                                                                         <input type="text" value="<?php echo $reservation->cust_adr; ?>" name="cust_adr" class="form-control">
                                                                     </div>
                                                                 </div>

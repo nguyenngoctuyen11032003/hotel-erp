@@ -24,14 +24,14 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Rooms Reports </h1>
+                            <h1>Báo cáo phòng</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="">Reports</a></li>
-                                <li class="breadcrumb-item active">Rooms</li>
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                <li class="breadcrumb-item"><a href="">Báo cáo</a></li>
+                                <li class="breadcrumb-item active">Phòng</li>
                             </ol>
                         </div>
                     </div>
@@ -47,7 +47,7 @@ require_once("../partials/head.php");
                                     <th>Mã phòng</th>
                                     <th>Loại phòng</th>
                                     <th>Trạng thái phòng</th>
-                                    <th>Giá nghỉ</th>
+                                    <th>Giá phòng</th>
                                 </tr>
                             </thead>
 
@@ -65,13 +65,13 @@ require_once("../partials/head.php");
                                         <td>
                                             <?php
                                             if ($rooms->status == 'Occupied') {
-                                                echo "<span class='badge bg-danger'>$rooms->status</span>";
+                                                echo "<span class='badge bg-danger'>Đã có khách</span>";
                                             } else {
-                                                echo "<span class='badge bg-warning'>$rooms->status</span>";
+                                                echo "<span class='badge bg-warning'>Trống</span>";
                                             }
                                             ?>
                                         </td>
-                                        <td>Ksh <?php echo $rooms->price; ?></td>
+                                        <td><?php echo number_format($rooms->price); ?> VND</td>
                                     </tr>
                                 <?php
                                 } ?>

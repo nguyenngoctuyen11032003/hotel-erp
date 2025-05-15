@@ -290,13 +290,12 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Nhân viên </h1>
+                            <h1>Quản lý nhân viên</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="">HRM</a></li>
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
                                 <li class="breadcrumb-item active">Nhân viên</li>
                             </ol>
                         </div>
@@ -309,15 +308,15 @@ require_once("../partials/head.php");
                     <form class="form-inline">
                     </form>
                     <div class="text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#import_modal">Import Staff Records</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add Staff</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#import_modal">Nhập dữ liệu nhân viên</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Thêm nhân viên</button>
                     </div>
                     <!-- Add  Modal -->
                     <div class="modal fade" id="add_modal">
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Fill All Values </h4>
+                                    <h4 class="modal-title">Điền đầy đủ thông tin</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -333,37 +332,37 @@ require_once("../partials/head.php");
 
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Staff Number</label>
+                                                <label for="inputEmail4">Mã nhân viên</label>
                                                 <input type="text" name="number" value="<?php echo $a; ?>-<?php echo $b; ?>" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Full Name</label>
+                                                <label for="inputEmail4">Họ tên</label>
                                                 <input required type="text" name="name" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Mobile Phone Number</label>
+                                                <label for="inputEmail4">Số điện thoại</label>
                                                 <input required type="text" name="phone" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Email Address</label>
+                                                <label for="inputEmail4">Email</label>
                                                 <input required type="text" name="email" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Address</label>
+                                                <label for="inputEmail4">Địa chỉ</label>
                                                 <input required type="text" name="adr" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Password</label>
+                                                <label for="inputEmail4">Mật khẩu</label>
                                                 <input required type="text" name="password" class="form-control">
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="submit" name="Add_Staff" class="btn btn-warning mt-3">Submit</button>
+                                            <button type="submit" name="Add_Staff" class="btn btn-warning mt-3">Xác nhận</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
                         </div>
@@ -376,8 +375,8 @@ require_once("../partials/head.php");
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="text-center">
-                                        Allowed file types: XLS, XLSX.
-                                        <a class="text-primary" target="_blank" href="../public/templates/Staff.xlsx">Download</a> A Sample File.
+                                        Các loại file được phép: XLS, XLSX.
+                                        <a class="text-primary" target="_blank" href="../public/templates/Staff.xlsx">Tải về</a> file mẫu.
                                     </h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -388,23 +387,23 @@ require_once("../partials/head.php");
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="form-group col-md-12">
-                                                    <label for="exampleInputFile">Select File</label>
+                                                    <label for="exampleInputFile">Chọn file</label>
                                                     <div class="input-group">
                                                         <div class="custom-file">
                                                             <input required name="file" accept=".xls,.xlsx" type="file" class="custom-file-input" id="exampleInputFile">
-                                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                            <label class="custom-file-label" for="exampleInputFile">Chọn file</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="submit" name="upload" class="btn btn-primary">Upload File</button>
+                                            <button type="submit" name="upload" class="btn btn-primary">Tải lên</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
                         </div>
@@ -415,12 +414,12 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Staff Number</th>
-                                    <th>Name</th>
+                                    <th>Mã nhân viên</th>
+                                    <th>Họ tên nhân viên</th>
                                     <th>Email</th>
-                                    <th>Phone No</th>
-                                    <th>Address</th>
-                                    <th>Action</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
 
@@ -440,13 +439,13 @@ require_once("../partials/head.php");
                                         <td><?php echo $staff->adr; ?></td>
                                         <td>
 
-                                            <a class="badge badge-primary" data-toggle="modal" href="#update_<?php echo $staff->id; ?>">Update</a>
+                                            <a class="badge badge-primary" data-toggle="modal" href="#update_<?php echo $staff->id; ?>">Cập nhật</a>
                                             <!-- Update Modal -->
                                             <div class="modal fade" id="update_<?php echo $staff->id; ?>">
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Update <?php echo $staff->name; ?> Details</h4>
+                                                            <h4 class="modal-title">Cập nhật thông tin <?php echo $staff->name; ?></h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -461,59 +460,59 @@ require_once("../partials/head.php");
                                                                 </div>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Staff Number</label>
+                                                                        <label for="inputEmail4">Mã nhân viên</label>
                                                                         <input type="text" name="number" value="<?php echo $staff->number; ?>" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Full Name</label>
+                                                                        <label for="inputEmail4">Họ tên</label>
                                                                         <input required type="text" value="<?php echo $staff->name; ?>" name="name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Mobile Phone Number</label>
+                                                                        <label for="inputEmail4">Số điện thoại</label>
                                                                         <input required type="text" value="<?php echo $staff->phone; ?>" name="phone" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Email Address</label>
+                                                                        <label for="inputEmail4">Email</label>
                                                                         <input required type="text" value="<?php echo $staff->email; ?>" name="email" class="form-control">
                                                                     </div>
 
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Address</label>
+                                                                        <label for="inputEmail4">Địa chỉ</label>
                                                                         <input required type="text" value="<?php echo $staff->adr; ?>"" name=" adr" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Password</label>
+                                                                        <label for="inputEmail4">Mật khẩu</label>
                                                                         <input required type="text" name="password" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="Update_Staff" class="btn btn-warning mt-3">Submit</button>
+                                                                    <button type="submit" name="Update_Staff" class="btn btn-warning mt-3">Xác nhận</button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <a class="badge badge-danger" data-toggle="modal" href="#delete_<?php echo $staff->id; ?>">Delete</a>
+                                            <a class="badge badge-danger" data-toggle="modal" href="#delete_<?php echo $staff->id; ?>">Xóa</a>
                                             <!-- Delete Modal -->
                                             <div class="modal fade" id="delete_<?php echo $staff->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">XÁC NHẬN</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Delete <?php echo $staff->name; ?> - <?php echo $staff->number; ?> ?</h4>
+                                                            <h4>Xóa <?php echo $staff->name; ?> - <?php echo $staff->number; ?> ?</h4>
                                                             <br>
-                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                            <a href="staffs.php?Delete_Staff=<?php echo $staff->id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
+                                                            <a href="staffs.php?Delete_Staff=<?php echo $staff->id; ?>" class="text-center btn btn-danger"> Xóa </a>
                                                         </div>
                                                     </div>
                                                 </div>

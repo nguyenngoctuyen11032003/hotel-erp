@@ -96,7 +96,7 @@ require_once('../partials/head.php');
         $id = $_SESSION['id'];
         $ret = "SELECT * FROM `admin` WHERE id ='$id' ";
         $stmt = $mysqli->prepare($ret);
-        $stmt->execute(); //ok
+        $stmt->execute();
         $res = $stmt->get_result();
         while ($admin = $res->fetch_object()) {
         ?>
@@ -105,7 +105,7 @@ require_once('../partials/head.php');
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1><?php echo $admin->username; ?> Hồ sơ</h1>
+                                <h1>Hồ sơ: <?php echo $admin->username; ?></h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
@@ -125,10 +125,10 @@ require_once('../partials/head.php');
                                 <div class="card">
                                     <div class="card-header p-2">
                                         <ul class="nav nav-pills">
-                                            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Cài đặt</a></li>
-                                            <li class="nav-item"><a class="nav-link " href="#changePassword" data-toggle="tab">Đổi mật khẩu</a></li>
+                                            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Cập nhật thông tin</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#changePassword" data-toggle="tab">Đổi mật khẩu</a></li>
                                         </ul>
-                                    </div><!-- /.card-header -->
+                                    </div>
                                     <div class="card-body">
                                         <div class="tab-content">
                                             <div class="active tab-pane" id="settings">
@@ -147,7 +147,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                     <div class="form-group row">
                                                         <div class="offset-sm-2 col-sm-10">
-                                                            <button type="submit" name="profile_update" class="btn btn-primary">Cập nhật thông tin</button>
+                                                            <button type="submit" name="profile_update" class="btn btn-primary">Cập nhật</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -191,7 +191,6 @@ require_once('../partials/head.php');
         <?php require_once('../partials/footer.php');
         } ?>
     </div>
-
     <?php require_once('../partials/scripts.php'); ?>
 </body>
 

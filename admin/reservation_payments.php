@@ -14,10 +14,10 @@ if (isset($_GET['delete'])) {
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1; url=reservation_payments.php");
+        $success = "Đã xóa" && header("refresh:1; url=reservation_payments.php");
     } else {
         //inject alert that task failed
-        $info = "Please Try Again Or Try Later";
+        $info = "Vui lòng thử lại sau";
     }
 }
 require_once("../partials/head.php");
@@ -65,12 +65,12 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Mã</th>
+                                    <th>Mã thanh toán</th>
                                     <th>Số tiền</th>
                                     <th>Tên khách hàng</th>
                                     <th>Phương thức thanh toán</th>
                                     <th>Ngày thanh toán</th>
-                                    <th>Quản lý</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
 
@@ -101,7 +101,7 @@ require_once("../partials/head.php");
                                                                         <h4 class="text-center">
                                                                             <img height="100" width="200" src="../public/uploads/sys_logo/logo.png" class="img-thumbnail img-fluid" alt="System Logo">
                                                                             <br>
-                                                                            <small class="float-right">Date: <?php echo date('d M Y');?></small>
+                                                                            <small class="float-right">Ngày: <?php echo date('d M Y');?></small>
                                                                         </h4>
                                                                         <h4>
                                                                         NT Hotels Inc

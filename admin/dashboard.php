@@ -21,12 +21,12 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark">Dashboard </h1>
+                            <h1 class="m-0 text-dark">Bảng điều khiển</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="dashboard.php">Trang chủ</a></li>
-                                <li class="breadcrumb-item active">Dashboard</li>
+                                <li class="breadcrumb-item active">Bảng điều khiển</li>
                             </ol>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ require_once("../partials/head.php");
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-bed"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Tổng số phòng khách sạn</span>
+                                    <span class="info-box-text">Tổng số phòng</span>
                                     <span class="info-box-number">
                                         <?php echo $rooms; ?>
                                     </span>
@@ -53,7 +53,7 @@ require_once("../partials/head.php");
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Phòng đã sử dụng</span>
+                                    <span class="info-box-text">Phòng đang sử dụng</span>
                                     <span class="info-box-number"><?php echo $rooms_occupied; ?></span>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ require_once("../partials/head.php");
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-thumbs-down"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Phòng chưa sử dụng</span>
+                                    <span class="info-box-text">Phòng còn trống</span>
                                     <span class="info-box-number"><?php echo $rooms_vacant; ?></span>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@ require_once("../partials/head.php");
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Nhân viên</span>
+                                    <span class="info-box-text">Tổng số nhân viên</span>
                                     <span class="info-box-number"><?php echo $staffs; ?></span>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ require_once("../partials/head.php");
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Doanh thu phòng</span>
+                                    <span class="info-box-text">Doanh thu phòng nghỉ</span>
                                     <span class="info-box-number">
                                         <?php echo $accomodation; ?> Vnđ
                                     </span>
@@ -135,13 +135,13 @@ require_once("../partials/head.php");
                                         <div class="col-sm-4 col-6">
                                             <div class="description-block border-right">
                                                 <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation); ?>Vnđ</h5>
-                                                <span class="description-text">Doanh thu</span>
+                                                <span class="description-text">Tổng doanh thu</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-6">
                                             <div class="description-block border-right">
                                                 <h5 class="description-header"><?php echo $salary; ?>Vnđ</h5>
-                                                <span class="description-text">TỔNG LƯƠNG NHÂN SỰ</span>
+                                                <span class="description-text">Tổng lương nhân viên</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-6">
@@ -160,7 +160,7 @@ require_once("../partials/head.php");
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Biểu đồ số lượng theo loại phòng</h3>
+                                    <h3 class="card-title">Biểu đồ số lượng phòng theo loại</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -224,10 +224,10 @@ require_once("../partials/head.php");
                                             <thead>
                                                 <tr>
                                                     <th>
-                                                        Mã đặt
+                                                        Mã phòng
                                                     </th>
                                                     <th>
-                                                        Giá
+                                                        Giá phòng
                                                     </th>
                                                     <th>
                                                         Khách hàng
@@ -271,7 +271,7 @@ require_once("../partials/head.php");
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Các khoản thanh toán gần đây</h3>
+                                    <h3 class="card-title">Thanh toán gần đây</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -288,13 +288,13 @@ require_once("../partials/head.php");
                                                 <thead>
                                                     <tr>
                                                         <th>
-                                                            Mã đặt
+                                                            Mã thanh toán
                                                         </th>
                                                         <th>
                                                             Số tiền
                                                         </th>
                                                         <th>
-                                                            Dịch vụ đã thanh toán
+                                                            Dịch vụ
                                                         </th>
                                                         <th>
                                                             Ngày thanh toán

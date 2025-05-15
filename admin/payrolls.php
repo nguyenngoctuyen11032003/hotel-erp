@@ -163,14 +163,13 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Bảng lương</h1>
+                            <h1>Quản lý bảng lương</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                                 <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
-                                <li class="breadcrumb-item"><a href="">Quản lý nhân sự</a></li>
-                                <li class="breadcrumb-item active">Lương</li>
+                                <li class="breadcrumb-item active">Bảng lương</li>
                             </ol>
                         </div>
                     </div>
@@ -182,7 +181,7 @@ require_once("../partials/head.php");
                     <form class="form-inline">
                     </form>
                     <div class="text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Thêm lương</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Thêm bảng lương</button>
                     </div>
                     <!-- Add  Modal -->
                     <div class="modal fade" id="add_modal">
@@ -198,18 +197,18 @@ require_once("../partials/head.php");
                                     <form method="POST" enctype="multipart/form-data">
                                         <div class="form-row mb-4">
                                             <div style="display:none" class="form-group col-md-6">
-                                                <label for="inputEmail4">Payroll Id</label>
+                                                <label for="inputEmail4">ID bảng lương</label>
                                                 <input type="text" name="id" value="<?php echo $ID; ?>" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Payroll Code</label>
+                                                <label for="inputEmail4">Mã bảng lương</label>
                                                 <input type="text" name="code" value="<?php echo $a; ?>-<?php echo $b; ?>" class="form-control">
                                             </div>
                                             <!-- Ajax Staff Number To Give Me Staff ID AND Name -->
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Staff Number</label>
+                                                <label for="inputEmail4">Mã nhân viên</label>
                                                 <select class='form-control' onchange="getStaffDetails(this.value);" id="StaffNumber">
                                                     <option selected>Chọn mã nhân viên</option>
                                                     <?php
@@ -225,7 +224,7 @@ require_once("../partials/head.php");
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Staff Name</label>
+                                                <label for="inputEmail4">Tên nhân viên</label>
                                                 <input type="text" name="staff_name" id="StaffName" class="form-control">
                                                 <input type="hidden" name="staff_id" id="StaffID" class="form-control">
                                             </div>
@@ -251,7 +250,7 @@ require_once("../partials/head.php");
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Salary</label>
+                                                <label for="inputEmail4">Số tiền</label>
                                                 <input required type="text" name="salary" class="form-control">
                                             </div>
                                         </div>
@@ -274,7 +273,7 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Mã</th>
+                                    <th>Mã bảng lương</th>
                                     <th>Tháng</th>
                                     <th>Số tiền</th>
                                     <th>Tên nhân viên</th>
@@ -325,7 +324,7 @@ require_once("../partials/head.php");
                                                                         <table class="table">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Mã lương</th>
+                                                                                    <th>Mã bảng lương</th>
                                                                                     <th>Tên nhân viên</th>
                                                                                     <th>Số tiền</th>
                                                                                     <th>Tháng</th>
@@ -360,7 +359,7 @@ require_once("../partials/head.php");
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Update <?php echo $payrolls->staff_name; ?> <?php echo $payrolls->month; ?> Payroll.</h4>
+                                                            <h4 class="modal-title">Cập nhật bảng lương <?php echo $payrolls->staff_name; ?> tháng <?php echo $payrolls->month; ?>.</h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -369,7 +368,7 @@ require_once("../partials/head.php");
                                                             <form method="POST" enctype="multipart/form-data">
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-12">
-                                                                        <label for="inputEmail4">Payroll Code</label>
+                                                                        <label for="inputEmail4">Mã bảng lương</label>
                                                                         <input type="text" name="code" value="<?php echo $payrolls->code; ?>" class="form-control">
                                                                         <input type="hidden" name="id" value="<?php echo $payrolls->id; ?>" class="form-control">
 
@@ -395,12 +394,12 @@ require_once("../partials/head.php");
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Salary</label>
+                                                                        <label for="inputEmail4">Số tiền</label>
                                                                         <input required type="text" value="<?php echo $payrolls->salary; ?>" name="salary" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="Update_Payroll" class="btn btn-warning mt-3">Update Payroll</button>
+                                                                    <button type="submit" name="Update_Payroll" class="btn btn-warning mt-3">Cập nhật bảng lương</button>
                                                                 </div>
                                                             </form>
                                                         </div>

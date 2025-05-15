@@ -272,10 +272,9 @@ require_once('../partials/head.php');
                                             <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
                                                 <br>
                                                 <?php
-                                                /* Lưu cài đặt hệ thống */
                                                 $ret = "SELECT * FROM `system_settings` ";
                                                 $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
+                                                $stmt->execute();
                                                 $res = $stmt->get_result();
                                                 while ($sys = $res->fetch_object()) {
                                                 ?>
@@ -283,33 +282,25 @@ require_once('../partials/head.php');
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="form-group col-md-6">
-                                                                    <label for="">Tên hệ thống</label>
-                                                                    <input type="text" required name="sys_name" value="<?php echo $sys->sys_name; ?>" class="form-control">
-                                                                    <input type="hidden" required name="sys_id" value="<?php echo $sys->sys_id; ?>" class="form-control">
-
+                                                                    <label for="sys_name">Tên hệ thống</label>
+                                                                    <input type="text" name="sys_name" class="form-control" value="<?php echo $sys->sys_name; ?>" required>
                                                                 </div>
-
                                                                 <div class="form-group col-md-6">
-                                                                    <label for="">Logo hệ thống</label>
-                                                                    <div class="input-group">
-                                                                        <div class="custom-file">
-                                                                            <input required name="sys_logo" type="file" class="custom-file-input">
-                                                                            <label class="custom-file-label" for="exampleInputFile">Chọn file</label>
-                                                                        </div>
-                                                                    </div>
+                                                                    <label for="sys_tagline">Khẩu hiệu hệ thống</label>
+                                                                    <input type="text" name="sys_tagline" class="form-control" value="<?php echo $sys->sys_tagline; ?>" required>
                                                                 </div>
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="">Khẩu hiệu hệ thống</label>
-                                                                    <input type="text" required name="sys_tagline" class="form-control" value="<?php echo $sys->sys_tagline; ?>">
+                                                                    <label for="sys_logo">Logo hệ thống</label>
+                                                                    <input type="file" name="sys_logo" class="form-control">
+                                                                    <?php if (!empty($sys->sys_logo)) { ?>
+                                                                        <img src="../public/uploads/sys_logo/<?php echo $sys->sys_logo; ?>" height="60" alt="Logo hiện tại">
+                                                                    <?php } ?>
                                                                 </div>
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="">Giấy phép hệ thống</label>
-                                                                    <textarea rows="10" type="text" readonly name="sys_license" class="form-control"><?php echo $sys->sys_license; ?></textarea>
-                                                                </div>
+                                                                <input type="hidden" name="sys_id" value="<?php echo $sys->sys_id; ?>">
                                                             </div>
                                                         </div>
                                                         <div class="text-right">
-                                                            <button type="submit" name="systemSettings" class="btn btn-primary">Gửi</button>
+                                                            <button type="submit" name="systemSettings" class="btn btn-primary">Lưu thay đổi</button>
                                                         </div>
                                                     </form>
                                                 <?php
@@ -319,10 +310,9 @@ require_once('../partials/head.php');
                                             <div class="tab-pane fade show " id="custom-content-below-home-page" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
                                                 <br>
                                                 <?php
-                                                /* Lưu cài đặt trang chính */
                                                 $ret = "SELECT * FROM `system_settings` ";
                                                 $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
+                                                $stmt->execute();
                                                 $res = $stmt->get_result();
                                                 while ($sys = $res->fetch_object()) {
                                                 ?>
@@ -330,19 +320,18 @@ require_once('../partials/head.php');
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="">Khẩu hiệu chào mừng</label>
-                                                                    <input type="text" required name="welcome_heading" value="<?php echo $sys->welcome_heading; ?>" class="form-control">
-                                                                    <!-- Sys Id -->
-                                                                    <input type="hidden" required name="sys_id" value="<?php echo $sys->sys_id; ?>" class="form-control">
+                                                                    <label for="welcome_heading">Tiêu đề chào mừng</label>
+                                                                    <input type="text" name="welcome_heading" class="form-control" value="<?php echo $sys->welcome_heading; ?>" required>
                                                                 </div>
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="">Nội dung chào mừng</label>
-                                                                    <textarea rows="10" type="text" name="welcome_content" class="form-control"><?php echo $sys->welcome_content; ?></textarea>
+                                                                    <label for="welcome_content">Nội dung chào mừng</label>
+                                                                    <textarea name="welcome_content" class="form-control" rows="3" required><?php echo $sys->welcome_content; ?></textarea>
                                                                 </div>
+                                                                <input type="hidden" name="sys_id" value="<?php echo $sys->sys_id; ?>">
                                                             </div>
                                                         </div>
                                                         <div class="text-right">
-                                                            <button type="submit" name="HomePageCustomizations" class="btn btn-primary">Gửi</button>
+                                                            <button type="submit" name="HomePageCustomizations" class="btn btn-primary">Lưu thay đổi</button>
                                                         </div>
                                                     </form>
                                                 <?php
@@ -352,50 +341,44 @@ require_once('../partials/head.php');
                                             <div class="tab-pane fade show " id="contact_details" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
                                                 <br>
                                                 <?php
-                                                /* Lưu cài đặt thông tin liên hệ */
                                                 $ret = "SELECT * FROM `system_settings` ";
                                                 $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
+                                                $stmt->execute();
                                                 $res = $stmt->get_result();
                                                 while ($sys = $res->fetch_object()) {
                                                 ?>
                                                     <form method="post" enctype="multipart/form-data" role="form">
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="form-group col-md-12">
-                                                                    <!-- Sys Id -->
-                                                                    <input type="hidden" required name="sys_id" value="<?php echo $sys->sys_id; ?>" class="form-control">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="contacts_phone">Số điện thoại liên hệ</label>
+                                                                    <input type="text" name="contacts_phone" class="form-control" value="<?php echo $sys->contacts_phone; ?>" required>
                                                                 </div>
                                                                 <div class="form-group col-md-6">
-                                                                    <label for="">Số điện thoại liên hệ</label>
-                                                                    <input type="text" required name="contacts_phone" value="<?php echo $sys->contacts_phone; ?>" class="form-control">
+                                                                    <label for="contacts_email">Email liên hệ</label>
+                                                                    <input type="email" name="contacts_email" class="form-control" value="<?php echo $sys->contacts_email; ?>" required>
                                                                 </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="">Địa chỉ email liên hệ</label>
-                                                                    <input type="text" required name="contacts_email" value="<?php echo $sys->contacts_email; ?>" class="form-control">
-                                                                </div>
-
-                                                                <div class="form-group col-md-4">
-                                                                    <label for="">Tên người dùng Facebook</label>
-                                                                    <input type="text" required name="social_fb" value="<?php echo $sys->social_fb; ?>" class="form-control">
-                                                                </div>
-                                                                <div class="form-group col-md-4">
-                                                                    <label for="">Tên người dùng Twitter</label>
-                                                                    <input type="text" required name="social_ig" value="<?php echo $sys->social_ig; ?>" class="form-control">
-                                                                </div>
-                                                                <div class="form-group col-md-4">
-                                                                    <label for="">Tên người dùng Instagram</label>
-                                                                    <input type="text" required name="social_twitter" value="<?php echo $sys->social_twitter; ?>" class="form-control">
-                                                                </div>
-
                                                                 <div class="form-group col-md-12">
-                                                                    <label for="">Địa chỉ vật lý</label>
-                                                                    <input type="text" required name="contacts_addres" value="<?php echo $sys->contacts_addres; ?>" class="form-control">
+                                                                    <label for="contacts_addres">Địa chỉ liên hệ</label>
+                                                                    <input type="text" name="contacts_addres" class="form-control" value="<?php echo $sys->contacts_addres; ?>" required>
                                                                 </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="social_fb">Facebook</label>
+                                                                    <input type="text" name="social_fb" class="form-control" value="<?php echo $sys->social_fb; ?>">
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="social_ig">Instagram</label>
+                                                                    <input type="text" name="social_ig" class="form-control" value="<?php echo $sys->social_ig; ?>">
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="social_twitter">Twitter</label>
+                                                                    <input type="text" name="social_twitter" class="form-control" value="<?php echo $sys->social_twitter; ?>">
+                                                                </div>
+                                                                <input type="hidden" name="sys_id" value="<?php echo $sys->sys_id; ?>">
                                                             </div>
                                                         </div>
                                                         <div class="text-right">
-                                                            <button type="submit" name="ContactsCustomizations" class="btn btn-primary">Gửi</button>
+                                                            <button type="submit" name="ContactsCustomizations" class="btn btn-primary">Lưu thay đổi</button>
                                                         </div>
                                                     </form>
                                                 <?php
@@ -405,10 +388,9 @@ require_once('../partials/head.php');
                                             <div class="tab-pane fade show " id="about" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
                                                 <br>
                                                 <?php
-                                                /* Lưu cài đặt về */
                                                 $ret = "SELECT * FROM `system_settings` ";
                                                 $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
+                                                $stmt->execute();
                                                 $res = $stmt->get_result();
                                                 while ($sys = $res->fetch_object()) {
                                                 ?>
@@ -416,18 +398,14 @@ require_once('../partials/head.php');
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="form-group col-md-12">
-                                                                    <!-- Sys Id -->
-                                                                    <input type="hidden" required name="sys_id" value="<?php echo $sys->sys_id; ?>" class="form-control">
+                                                                    <label for="contact_about">Nội dung giới thiệu</label>
+                                                                    <textarea name="contact_about" class="form-control" rows="4" required><?php echo $sys->contact_about; ?></textarea>
                                                                 </div>
-
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="">Về</label>
-                                                                    <textarea type="text" rows="10" required name="contact_about" class="form-control"><?php echo $sys->contacts_about;?></textarea>
-                                                                </div>
+                                                                <input type="hidden" name="sys_id" value="<?php echo $sys->sys_id; ?>">
                                                             </div>
                                                         </div>
                                                         <div class="text-right">
-                                                            <button type="submit" name="AboutCustomization" class="btn btn-primary">Gửi</button>
+                                                            <button type="submit" name="AboutCustomization" class="btn btn-primary">Lưu thay đổi</button>
                                                         </div>
                                                     </form>
                                                 <?php

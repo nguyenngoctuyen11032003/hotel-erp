@@ -186,13 +186,13 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Doanh Thu Nhà Hàng</h1>
+                            <h1>Quản lý doanh thu nhà hàng</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                                 <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
-                                <li class="breadcrumb-item active">Doanh Thu Nhà Hàng</li>
+                                <li class="breadcrumb-item active">Doanh thu nhà hàng</li>
                             </ol>
                         </div>
                     </div>
@@ -211,7 +211,7 @@ require_once("../partials/head.php");
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Điền Tất Cả Các Giá Trị</h4>
+                                    <h4 class="modal-title">Thêm doanh thu nhà hàng</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -228,11 +228,11 @@ require_once("../partials/head.php");
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Mã Doanh Thu</label>
+                                                <label for="inputEmail4">Mã doanh thu</label>
                                                 <input required type="text" value="<?php echo $paycode; ?>" name="code" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Phương Thức Thanh Toán</label>
+                                                <label for="inputEmail4">Phương thức thanh toán</label>
                                                 <select class='form-control' name="payment_means" id="">
                                                     <option selected>Tiền mặt</option>
                                                     <option>Mpesa</option>
@@ -241,18 +241,18 @@ require_once("../partials/head.php");
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Tên Khách Hàng</label>
+                                                <label for="inputEmail4">Tên khách hàng</label>
                                                 <input required type="text" name="cust_name" class="form-control">
 
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Số Tiền Bán</label>
+                                                <label for="inputEmail4">Số tiền</label>
                                                 <input required type="text" name="amt" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="text-right">
-                                            <button type="submit" name="Add_Sale" class="btn btn-primary mt-3">Gửi</button>
+                                            <button type="submit" name="Add_Sale" class="btn btn-primary mt-3">Thêm</button>
                                         </div>
                                     </form>
                                 </div>
@@ -268,12 +268,12 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Mã</th>
+                                    <th>Mã doanh thu</th>
                                     <th>Số tiền</th>
                                     <th>Tên khách hàng</th>
                                     <th>Phương thức thanh toán</th>
-                                    <th>Ngày</th>
-                                    <th>Hành động</th>
+                                    <th>Ngày thanh toán</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -371,12 +371,12 @@ require_once("../partials/head.php");
                                                                 </div>
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Mã Doanh Thu</label>
+                                                                        <label for="inputEmail4">Mã doanh thu</label>
                                                                         <input required type="text" value="<?php echo $payments->code; ?>" name="code" class="form-control">
                                                                     </div>
 
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Phương Thức Thanh Toán</label>
+                                                                        <label for="inputEmail4">Phương thức thanh toán</label>
                                                                         <select class='form-control' name="payment_means" id="">
                                                                             <option><?php echo $payments->payment_means; ?></option>
                                                                             <option>Tiền mặt</option>
@@ -386,12 +386,12 @@ require_once("../partials/head.php");
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Tên Khách Hàng</label>
+                                                                        <label for="inputEmail4">Tên khách hàng</label>
                                                                         <input required type="text" value="<?php echo $payments->cust_name; ?>" name="cust_name" class="form-control">
 
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Số Tiền Bán</label>
+                                                                        <label for="inputEmail4">Số tiền</label>
                                                                         <input required type="text" value="<?php echo $payments->amt; ?>" name="amt" class="form-control">
                                                                     </div>
                                                                 </div>
@@ -420,7 +420,7 @@ require_once("../partials/head.php");
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Xóa <?php echo $payments->code; ?> ?</h4>
+                                                            <h4>Xóa doanh thu <?php echo $payments->code; ?>?</h4>
                                                             <br>
                                                             <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
                                                             <a href="resturant_sales.php?delete=<?php echo $payments->id; ?>" class="text-center btn btn-danger">Xóa</a>

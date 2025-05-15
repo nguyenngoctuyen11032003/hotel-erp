@@ -128,10 +128,10 @@ require_once("../partials/head.php");
                                     <th>Ngày nhận phòng</th>
                                     <th>Ngày trả phòng</th>
                                     <th>Tên khách hàng</th>
-                                    <th>Số ngày đã đặt</th>
+                                    <th>Số ngày đặt</th>
                                     <th>Số tiền</th>
                                     <th>Ngày đặt</th>
-                                    <th>Hành động</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
 

@@ -50,7 +50,7 @@ require_once("../partials/head.php");
                                     <th>Ngày nhận phòng</th>
                                     <th>Ngày trả phòng</th>
                                     <th>Tên khách hàng</th>
-                                    <th>Số CMND</th>
+                                    <th>Số CMND/CCCD</th>
                                     <th>Trạng thái thanh toán</th>
                                     <th>Ngày đặt phòng</th>
                                 </tr>

@@ -178,7 +178,7 @@ require_once("../partials/head.php");
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Điền tất cả các giá trị </h4>
+                                    <h4 class="modal-title">Thêm tài sản mới</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -207,7 +207,7 @@ require_once("../partials/head.php");
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="submit" name="add_asset" class="btn btn-warning mt-3">Gửi</button>
+                                            <button type="submit" name="add_asset" class="btn btn-warning mt-3">Thêm</button>
                                         </div>
                                     </form>
                                 </div>
@@ -228,7 +228,7 @@ require_once("../partials/head.php");
                                     <th>Tên tài sản</th>
                                     <th>Trạng thái tài sản</th>
                                     <th>Ngày tạo</th>
-                                    <th>Hành động</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
 
@@ -246,7 +246,7 @@ require_once("../partials/head.php");
                                         <td><?php echo $asset->status; ?></td>
                                         <td><?php echo date('d M Y', strtotime($asset->created_at)); ?></td>
                                         <td>
-                                            <a class="badge badge-success" data-toggle="modal" href="#view_<?php echo $asset->id; ?>">Xem </a>
+                                            <a class="badge badge-success" data-toggle="modal" href="#view_<?php echo $asset->id; ?>">Xem</a>
                                             <!-- Xem tài sản -->
                                             <div class="modal fade" id="view_<?php echo $asset->id; ?>">
                                                 <div class="modal-dialog modal-xl">
@@ -289,7 +289,7 @@ require_once("../partials/head.php");
                                                                         <table class="table">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th class="text-center">Mô tả tài sản.</th>
+                                                                                    <th class="text-center">Mô tả tài sản</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -316,7 +316,7 @@ require_once("../partials/head.php");
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Cập nhật hồ sơ <?php echo $asset->code; ?> </h4>
+                                                            <h4 class="modal-title">Cập nhật tài sản: <?php echo $asset->code; ?></h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -352,7 +352,7 @@ require_once("../partials/head.php");
                                                                     </div>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="Update_Asset" class="btn btn-warning mt-3">Gửi</button>
+                                                                    <button type="submit" name="Update_Asset" class="btn btn-warning mt-3">Cập nhật</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -374,7 +374,7 @@ require_once("../partials/head.php");
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Xóa hồ sơ <?php echo $asset->name; ?>?</h4>
+                                                            <h4>Xóa tài sản <?php echo $asset->name; ?>?</h4>
                                                             <br>
                                                             <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
                                                             <a href="inventory_assets.php?Delete=<?php echo $asset->id; ?>" class="text-center btn btn-danger"> Xóa </a>

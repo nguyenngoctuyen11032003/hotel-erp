@@ -263,12 +263,12 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Phòng </h1>
+                            <h1>Quản lý phòng</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
                                 <li class="breadcrumb-item active">Phòng</li>
                             </ol>
                         </div>
@@ -289,7 +289,7 @@ require_once("../partials/head.php");
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Fill All Values </h4>
+                                    <h4 class="modal-title">Thêm phòng mới</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -314,21 +314,21 @@ require_once("../partials/head.php");
                                                     <option selected>Chọn loại phòng</option>
                                                     <option>Phòng đơn</option>
                                                     <option>Phòng đôi</option>
-                                                    <option>Phòng Deluxe</option>
+                                                    <option>Phòng deluxe</option>
                                                     <option>Phòng thường lớn</option>
                                                     <option>Phòng penthouse</option>
                                                     <option>Phòng tổng thống</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Room Status</label>
+                                                <label for="inputEmail4">Trạng thái phòng</label>
                                                 <select class='form-control' name="status" id="">
-                                                    <option selected>Vacant</option>
-                                                    <option>Occupied</option>
+                                                    <option selected>Trống</option>
+                                                    <option>Đã có khách</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="exampleInputFile">Room Image</label>
+                                                <label for="exampleInputFile">Ảnh phòng</label>
                                                 <div class="input-group">
                                                     <div class="custom-file">
                                                         <input required name="image" accept=".png,.jpg" type="file" class="custom-file-input" id="exampleInputFile">
@@ -337,24 +337,24 @@ require_once("../partials/head.php");
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Accomodation Price</label>
+                                                <label for="inputEmail4">Giá phòng</label>
                                                 <input required type="text" name="price" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-12">
-                                                <label for="inputAddress">Room Details</label>
+                                                <label for="inputAddress">Chi tiết phòng</label>
                                                 <textarea name="details" rows="6" class="form-control"></textarea>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="submit" name="Add_Room" class="btn btn-primary">Add Room</button>
+                                            <button type="submit" name="Add_Room" class="btn btn-primary">Thêm phòng</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
                         </div>
@@ -395,7 +395,7 @@ require_once("../partials/head.php");
                                     </form>
                                 </div>
                                 <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
                         </div>
@@ -409,7 +409,7 @@ require_once("../partials/head.php");
                                     <th>Mã phòng</th>
                                     <th>Loại phòng</th>
                                     <th>Trạng thái phòng</th>
-                                    <th>Giá nghỉ</th>
+                                    <th>Giá phòng</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
@@ -436,13 +436,13 @@ require_once("../partials/head.php");
                                         </td>
                                         <td>Ksh <?php echo $rooms->price; ?></td>
                                         <td>
-                                            <a class="badge bg-success" data-toggle="modal" href="#view-<?php echo $rooms->id; ?>"> <i class="fas fa-eye"></i> View </a>
+                                            <a class="badge bg-success" data-toggle="modal" href="#view-<?php echo $rooms->id; ?>"> <i class="fas fa-eye"></i> Xem </a>
                                             <!-- View Modal -->
                                             <div class="modal fade" id="view-<?php echo $rooms->id; ?>">
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title"><?php echo $rooms->number; ?> Details</h4>
+                                                            <h4 class="modal-title"><?php echo $rooms->number; ?> - Thông tin chi tiết</h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -463,16 +463,16 @@ require_once("../partials/head.php");
                                                                 <thead>
                                                                     <tr>
                                                                         <th>
-                                                                            Room Number
+                                                                            Mã phòng
                                                                         </th>
                                                                         <th>
-                                                                            Room Price
+                                                                            Giá phòng
                                                                         </th>
                                                                         <th>
-                                                                            Room Category
+                                                                            Loại phòng
                                                                         </th>
                                                                         <th>
-                                                                            Room Status
+                                                                            Trạng thái phòng
                                                                         </th>
                                                                     </tr>
                                                                 </thead>
@@ -501,13 +501,13 @@ require_once("../partials/head.php");
                                                                 </tbody>
                                                             </table>
                                                             <br>
-                                                            <h4 class="text-center">Room Details / Distinct Features</h4>
+                                                            <h4 class="text-center">Chi tiết phòng / Đặc điểm nổi bật</h4>
                                                             <p>
                                                                 <?php echo $rooms->details; ?>
                                                             </p>
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -519,8 +519,8 @@ require_once("../partials/head.php");
                                             if ($rooms->status == 'Occupied') {
                                             } else {
                                                 //Update And Delete
-                                                echo "<a class='badge bg-primary' href='#update-$rooms->id' data-toggle='modal'> <i class='fas fa-edit'></i> Update </a>";
-                                                echo "<a class='badge bg-danger text-danger' href='#delete-$rooms->id' data-toggle='modal'> <i class='fas fa-trash'></i> Delete </a>";
+                                                echo "<a class='badge bg-primary' href='#update-$rooms->id' data-toggle='modal'> <i class='fas fa-edit'></i> Cập nhật </a>";
+                                                echo "<a class='badge bg-danger text-danger' href='#delete-$rooms->id' data-toggle='modal'> <i class='fas fa-trash'></i> Xóa </a>";
                                             }
                                             ?>
                                             <!-- Update Modal -->
@@ -528,7 +528,7 @@ require_once("../partials/head.php");
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Update Room Number: <?php echo $rooms->number; ?></h4>
+                                                            <h4 class="modal-title">Cập nhật phòng: <?php echo $rooms->number; ?></h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -537,7 +537,7 @@ require_once("../partials/head.php");
                                                             <form method="POST" enctype="multipart/form-data">
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="inputEmail4">Room Number</label>
+                                                                        <label for="inputEmail4">Mã phòng</label>
                                                                         <input required type="text" value="<?php echo $rooms->number; ?>" name="number" class="form-control">
                                                                         <!-- Hide This -->
                                                                         <input required type="hidden" value="<?php echo $rooms->id; ?>" name="id" class="form-control">
@@ -555,15 +555,15 @@ require_once("../partials/head.php");
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Room Status</label>
+                                                                        <label for="inputEmail4">Trạng thái phòng</label>
                                                                         <select class='form-control ' name="status" id="">
                                                                             <option selected><?php echo $rooms->status; ?></option>
-                                                                            <option>Vacant</option>
-                                                                            <option>Occupied</option>
+                                                                            <option>Trống</option>
+                                                                            <option>Đã có khách</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="exampleInputFile">Room Image</label>
+                                                                        <label for="exampleInputFile">Ảnh phòng</label>
                                                                         <div class="input-group">
                                                                             <div class="custom-file">
                                                                                 <input required name="image" accept=".png,.jpg" type="file" class="custom-file-input" id="exampleInputFile">
@@ -572,24 +572,24 @@ require_once("../partials/head.php");
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group col-md-4">
-                                                                        <label for="inputEmail4">Accomodation Price</label>
+                                                                        <label for="inputEmail4">Giá phòng</label>
                                                                         <input required type="text" value="<?php echo $rooms->price; ?>" name="price" class="form-control">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-12">
-                                                                        <label for="inputAddress">Room Details</label>
+                                                                        <label for="inputAddress">Chi tiết phòng</label>
                                                                         <textarea name="details" rows="8" class="form-control"><?php echo $rooms->details; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                    <button type="submit" name="Update_Room" class="btn btn-primary">Update Room</button>
+                                                                    <button type="submit" name="Update_Room" class="btn btn-primary">Cập nhật phòng</button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -601,16 +601,16 @@ require_once("../partials/head.php");
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">XÁC NHẬN</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Delete Room <?php echo $rooms->number; ?> ?</h4>
+                                                            <h4>Xóa phòng <?php echo $rooms->number; ?> ?</h4>
                                                             <br>
-                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                            <a href="rooms.php?Delete_Room=<?php echo $rooms->id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
+                                                            <a href="rooms.php?Delete_Room=<?php echo $rooms->id; ?>" class="text-center btn btn-danger"> Xóa </a>
                                                         </div>
                                                     </div>
                                                 </div>

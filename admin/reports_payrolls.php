@@ -44,7 +44,7 @@ require_once("../partials/head.php");
                         <table id="reports" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Mã</th>
+                                    <th>Mã bảng lương</th>
                                     <th>Tháng</th>
                                     <th>Số tiền</th>
                                     <th>Tên nhân viên</th>
@@ -61,13 +61,11 @@ require_once("../partials/head.php");
                                 while ($payrolls = $res->fetch_object()) {
                                 ?>
                                     <tr>
-                                        <td>
-                                            <?php echo $payrolls->code; ?>
-                                        </td>
+                                        <td><?php echo $payrolls->code; ?></td>
                                         <td><?php echo $payrolls->month; ?></td>
-                                        <td>Ksh <?php echo $payrolls->salary; ?></td>
+                                        <td><?php echo number_format($payrolls->salary); ?> VND</td>
                                         <td><?php echo $payrolls->staff_name; ?></td>
-                                        <td><?php echo date('d M Y g:ia', strtotime($payrolls->created_at)); ?></td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($payrolls->created_at)); ?></td>
                                     </tr>
                                 <?php
                                 } ?>

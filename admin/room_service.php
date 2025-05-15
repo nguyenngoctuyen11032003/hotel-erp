@@ -97,13 +97,13 @@ require_once("../partials/head.php");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Dịch Vụ Phòng</h1>
+                            <h1>Dịch vụ phòng</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
-                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng Điều Khiển</a></li>
-                                <li class="breadcrumb-item active">Dịch Vụ Phòng</li>
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="dashboard.php">Bảng điều khiển</a></li>
+                                <li class="breadcrumb-item active">Dịch vụ phòng</li>
                             </ol>
                         </div>
                     </div>
@@ -115,14 +115,14 @@ require_once("../partials/head.php");
                     <form class="form-inline">
                     </form>
                     <div class="text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Thêm Phân Công Dịch Vụ Phòng</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Thêm phân công dịch vụ phòng</button>
                     </div>
                     <!-- Add  Modal -->
                     <div class="modal fade" id="add_modal">
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Điền Tất Cả Các Giá Trị</h4>
+                                    <h4 class="modal-title">Thêm phân công dịch vụ phòng</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -138,7 +138,7 @@ require_once("../partials/head.php");
 
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Số Nhân Viên</label>
+                                                <label for="inputEmail4">Số nhân viên</label>
                                                 <select name="staff_number" class="form-control" id="StaffNumber" onchange="getStaffDetails(this.value);">
                                                     <option>Chọn Số Nhân Viên</option>
                                                     <?php
@@ -154,7 +154,7 @@ require_once("../partials/head.php");
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Số Phòng</label>
+                                                <label for="inputEmail4">Số phòng</label>
                                                 <select name="room_number" class="form-control" id="RNumber" onchange="getRoomDetails(this.value);">
                                                     <option>Chọn Số Phòng</option>
                                                     <?php
@@ -170,7 +170,7 @@ require_once("../partials/head.php");
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label for="inputEmail4">Tên Nhân Viên</label>
+                                                <label for="inputEmail4">Tên nhân viên</label>
                                                 <input required type="text" id="StaffName" name="staff_name" class="form-control">
                                                 <input required type="hidden" id="StaffID" name="staff_id" class="form-control">
                                             </div>
@@ -179,7 +179,7 @@ require_once("../partials/head.php");
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="submit" name="Add_Roomservice" class="btn btn-warning mt-3">Gửi</button>
+                                            <button type="submit" name="Add_Roomservice" class="btn btn-warning mt-3">Thêm</button>
                                         </div>
                                     </form>
                                 </div>
@@ -196,11 +196,11 @@ require_once("../partials/head.php");
                         <table id="dt-1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Số Nhân Viên</th>
-                                    <th>Tên</th>
-                                    <th>Phòng Được Phân Công</th>
-                                    <th>Ngày Phân Công</th>
-                                    <th>Hành Động</th>
+                                    <th>Số nhân viên</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Phòng được phân công</th>
+                                    <th>Ngày phân công</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
 
@@ -231,7 +231,7 @@ require_once("../partials/head.php");
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Xóa Bản Ghi Phân Công Dịch Vụ Phòng Của <?php echo $service->staff_name; ?>?</h4>
+                                                            <h4>Xóa phân công dịch vụ phòng của <?php echo $service->staff_name; ?>?</h4>
                                                             <br>
                                                             <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
                                                             <a href="room_service.php?Delete=<?php echo $service->id; ?>" class="text-center btn btn-danger">Xóa</a>
