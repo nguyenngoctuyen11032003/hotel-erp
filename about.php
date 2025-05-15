@@ -6,7 +6,8 @@ $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($sys = $res->fetch_object()) {
-    if ($sys_logo = '') {
+    // Sửa lỗi logic: so sánh thay vì gán
+    if (empty($sys->sys_logo)) {
         $logo_dir = 'public/uploads/sys_logo/logo.png';
     } else {
         $logo_dir = "public/uploads/sys_logo/$sys->sys_logo";
@@ -69,7 +70,7 @@ while ($sys = $res->fetch_object()) {
                                     <div class="col-lg-4 footer_col">
                                         <div class="footer_info d-flex flex-column align-items-lg-end align-items-center justify-content-start">
                                             <div class="text-center">
-                                                <div>Điện thoại liên hệ:</div>
+                                                <div>Điện thoại:</div>
                                                 <div><?php echo $sys->contacts_phone; ?></div>
                                             </div>
                                         </div>
@@ -85,7 +86,7 @@ while ($sys = $res->fetch_object()) {
                                     <div class="col-lg-4 footer_col">
                                         <div class="footer_info d-flex flex-column align-items-lg-start align-items-center justify-content-start">
                                             <div class="text-center">
-                                                <div>Thư điện tử:</div>
+                                                <div>Email:</div>
                                                 <div><?php echo $sys->contacts_email; ?></div>
                                             </div>
                                         </div>
