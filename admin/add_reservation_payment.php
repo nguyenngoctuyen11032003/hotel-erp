@@ -84,6 +84,20 @@ if (isset($_POST['Pay_Reservation'])) {
     }
 }
 
+// Xử lý xóa đặt phòng khi có tham số delete
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $stmt = $mysqli->prepare("DELETE FROM reservations WHERE id=?");
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    if ($stmt) {
+        header("Location: add_reservation_payment.php");
+        exit();
+    } else {
+        $err = "Không thể xóa đặt phòng. Vui lòng thử lại.";
+    }
+}
+
 require_once("../partials/head.php");
 ?>
 

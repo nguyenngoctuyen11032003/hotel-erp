@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 if (isset($_GET['Delete_Customer'])) {
     $id = $_GET['Delete_Customer'];
-    $stmt = $mysqli->prepare("DELETE FROM customers WHERE id=?");
+    // Xóa khách hàng khỏi bảng reservations thay vì bảng customers
+    $stmt = $mysqli->prepare("DELETE FROM reservations WHERE id=?");
     $stmt->bind_param('s', $id);
     $stmt->execute();
     $success = $stmt ? "Đã xóa khách hàng thành công" : "Vui lòng thử lại";
