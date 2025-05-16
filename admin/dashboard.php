@@ -89,7 +89,7 @@ require_once("../partials/head.php");
                                 <div class="info-box-content">
                                     <span class="info-box-text">Doanh thu phòng nghỉ</span>
                                     <span class="info-box-number">
-                                        <?php echo $accomodation; ?> Vnđ
+                                        <?php echo number_format($accomodation, 0, ',', ','); ?> VND
                                     </span>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@ require_once("../partials/head.php");
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Doanh thu nhà hàng</span>
-                                    <span class="info-box-number"><?php echo $Resturant_Service; ?>Vnđ</span>
+                                    <span class="info-box-number"><?php echo number_format($Resturant_Service, 0, ',', ','); ?> VND</span>
                                 </div>
                             </div>
                         </div>
@@ -134,19 +134,19 @@ require_once("../partials/head.php");
                                     <div class="row">
                                         <div class="col-sm-4 col-6">
                                             <div class="description-block border-right">
-                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation); ?>Vnđ</h5>
+                                                <h5 class="description-header"><?php echo number_format($Resturant_Service + $accomodation, 0, ',', ','); ?> VND</h5>
                                                 <span class="description-text">Tổng doanh thu</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-6">
                                             <div class="description-block border-right">
-                                                <h5 class="description-header"><?php echo $salary; ?>Vnđ</h5>
+                                                <h5 class="description-header"><?php echo number_format($salary, 0, ',', ','); ?> VND</h5>
                                                 <span class="description-text">Tổng lương nhân viên</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-4 col-6">
                                             <div class="description-block border-right">
-                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation) - ($salary); ?>Vnđ</h5>
+                                                <h5 class="description-header"><?php echo number_format(($Resturant_Service + $accomodation) - ($salary), 0, ',', ','); ?> VND</h5>
                                                 <span class="description-text">Tổng lợi nhuận</span>
                                             </div>
                                         </div>
@@ -251,7 +251,7 @@ require_once("../partials/head.php");
                                                         </td>
 
                                                         <td>
-                                                            KSH <?php echo $reservation->room_cost; ?>
+                                                            <?php echo number_format($reservation->room_cost, 0, ',', ','); ?> VND
                                                         </td>
                                                         <td>
                                                             <?php echo $reservation->cust_name; ?>
@@ -314,7 +314,7 @@ require_once("../partials/head.php");
                                                                 <div class="td-content"><span class="badge badge-success"><?php echo $payments->code; ?></span></div>
                                                             </td>
                                                             <td>
-                                                            Ksh <?php echo $payments->amt; ?>
+                                                                <?php echo number_format($payments->amt, 0, ',', ','); ?> VND
                                                             </td>
                                                             <td>
                                                                  <?php echo $payments->service_paid; ?>
