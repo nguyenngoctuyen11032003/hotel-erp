@@ -286,7 +286,7 @@ require_once("../partials/head.php");
                                 ?>
                                     <tr>
                                         <td><?php echo $payments->code; ?></td>
-                                        <td><?php echo $payments->amt; ?></td>
+                                        <td><?php echo number_format($payments->amt, 0, ',', ',') . ' VND'; ?></td>
                                         <td><?php echo $payments->cust_name; ?></td>
                                         <td><?php echo $payments->payment_means; ?></td>
                                         <td><?php echo date('d M Y g:ia', strtotime($payments->created_at)); ?></td>
