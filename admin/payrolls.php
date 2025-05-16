@@ -156,6 +156,18 @@ if (isset($_POST['get_staff_by_number'])) {
     exit();
 }
 
+// Lấy đường dẫn logo hệ thống (tương tự như index.php)
+$logo_dir = '../public/uploads/sys_logo/logo.png';
+$ret = "SELECT * FROM `system_settings` LIMIT 1";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute();
+$res = $stmt->get_result();
+if ($sys = $res->fetch_object()) {
+    if (!empty($sys->sys_logo)) {
+        $logo_dir = "../public/uploads/sys_logo/" . $sys->sys_logo;
+    }
+}
+
 require_once("../partials/head.php");
 ?>
 
@@ -322,18 +334,15 @@ require_once("../partials/head.php");
                                                             <div class="modal-body">
                                                                 <div id="Print_Payroll" class="invoice p-3 mb-3">
                                                                     <div class="row">
-                                                                        <div class="col-12 ">
-                                                                            <h4 class="text-center">
-                                                                                <img height="100" width="200" src="../public/uploads/sys_logo/logo.png" class="img-thumbnail img-fluid" alt="System Logo">
-                                                                                <br>
-                                                                                <small class="float-right">Tạo ngày: <?php echo date('d M Y', strtotime($payrolls->created_at)); ?></small>
-                                                                            </h4>
-                                                                            <h4>
-                                                                                Bảng lương nhân viên NNT Hotels
-                                                                            </h4>
+                                                                        <div class="col-12 text-center">
+                                                                            <img height="100" width="200" src="<?php echo $logo_dir; ?>" class="img-thumbnail img-fluid" alt="System Logo">
+                                                                            <br>
+                                                                            <small class="float-right">Tạo ngày: <?php echo date('d M Y', strtotime($payrolls->created_at)); ?></small>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <h4>Bảng lương nhân viên NNT Hotels</h4>
                                                                         </div>
                                                                     </div>
-
                                                                     <div class="row">
                                                                         <div class="col-12 table-responsive">
                                                                             <table class="table">
@@ -356,12 +365,10 @@ require_once("../partials/head.php");
                                                                             </table>
                                                                         </div>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer justify-content-between">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-
                                                                 <button id="print" onclick="printContent('Print_Payroll');" type="button" class="btn btn-primary">In</button>
                                                             </div>
                                                         </div>
