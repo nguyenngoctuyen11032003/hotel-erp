@@ -260,11 +260,23 @@ if (isset($_GET['Vacate_Room'])) {
     /* After Clients Reservations Days Are Over They Have To Vacate Room */
     $room_id = $_GET['Vacate_Room'];
     $status = $_GET['status'];
+    // Lấy reservation id nếu truyền qua GET (nên truyền thêm reservation id)
+    $reservation_id = isset($_GET['reservation_id']) ? $_GET['reservation_id'] : null;
     $rooms = "UPDATE rooms SET status =? WHERE  id =?";
     $roomsStmt = $mysqli->prepare($rooms);
     $roomsStmt->bind_param('ss', $status, $room_id);
     $roomsStmt->execute();
     $roomsStmt->close();
+
+    // Cập nhật trạng thái đặt phòng thành "Checked Out"
+    if ($reservation_id) {
+        $update_res = "UPDATE reservations SET status = 'Checked Out' WHERE id = ?";
+        $updateStmt = $mysqli->prepare($update_res);
+        $updateStmt->bind_param('s', $reservation_id);
+        $updateStmt->execute();
+        $updateStmt->close();
+    }
+
     if ($roomsStmt) {
         $success = "Deleted" && header("refresh:1; url=reservations.php");
     } else {
@@ -558,7 +570,7 @@ require_once("../partials/head.php");
                                                             <h4>Trả phòng <?php echo $reservation->room_number; ?>?</h4>
                                                             <br>
                                                             <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
-                                                            <a href="reservations.php?Vacate_Room=<?php echo $reservation->room_id; ?>&status=Vacant" class="text-center btn btn-danger"> Trả phòng </a>
+                                                            <a href="reservations.php?Vacate_Room=<?php echo $reservation->room_id; ?>&status=Vacant&reservation_id=<?php echo $reservation->id; ?>" class="text-center btn btn-danger"> Trả phòng </a>
                                                         </div>
                                                     </div>
                                                 </div>

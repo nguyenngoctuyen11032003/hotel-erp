@@ -285,17 +285,28 @@ if (isset($_GET['Delete_Reservation'])) {
 if (isset($_GET['Vacate_Room'])) {
     /* After Clients Reservations Days Are Over They Have To Vacate Room */
     $room_id = $_GET['Vacate_Room'];
+    // Lấy reservation id nếu truyền qua GET (nên truyền thêm reservation id)
+    $reservation_id = isset($_GET['reservation_id']) ? $_GET['reservation_id'] : null;
     $status = $_GET['status'];
     $rooms = "UPDATE rooms SET status =? WHERE  id =?";
     $roomsStmt = $mysqli->prepare($rooms);
     $roomsStmt->bind_param('ss', $status, $room_id);
     $roomsStmt->execute();
     $roomsStmt->close();
+
+    // Cập nhật trạng thái đặt phòng thành "Checked Out"
+    if ($reservation_id) {
+        $update_res = "UPDATE reservations SET status = 'Checked Out' WHERE id = ?";
+        $updateStmt = $mysqli->prepare($update_res);
+        $updateStmt->bind_param('s', $reservation_id);
+        $updateStmt->execute();
+        $updateStmt->close();
+    }
+
     if ($roomsStmt) {
-        $success = "Đã xóa" && header("refresh:1; url=reservations.php");
+        $success = "Deleted" && header("refresh:1; url=reservations.php");
     } else {
-        //inject alert that task failed
-        $info = "Vui lòng thử lại sau";
+        $info = "Please Try Again Or Try Later";
     }
 }
 
@@ -603,6 +614,7 @@ require_once("../partials/head.php");
                                             </div>
                                             <!-- End Delete MOdal -->
 
+                                            <?php if (!empty($reservation->room_id)) { ?>
                                             <a class="badge badge-success" data-toggle="modal" href="#vacate-<?php echo $reservation->id; ?>">Trả phòng</a>
                                             <!-- Vacate Room Modal  -->
                                             <div class="modal fade" id="vacate-<?php echo $reservation->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -615,19 +627,21 @@ require_once("../partials/head.php");
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center text-danger">
-                                                            <h4>Trả phòng số <?php echo $reservation->room_number; ?>?</h4>
+                                                            <h4>Trả phòng số <?php echo htmlspecialchars($reservation->room_number); ?>?</h4>
                                                             <br>
                                                             <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
-                                                            <a href="reservations.php?Vacate_Room=<?php echo $reservation->room_id; ?>&status=Vacant" class="text-center btn btn-danger"> Trả phòng </a>
+                                                            <a href="reservations.php?Vacate_Room=<?php echo urlencode($reservation->room_id); ?>&status=Vacant&reservation_id=<?php echo urlencode($reservation->id); ?>" class="text-center btn btn-danger"> Trả phòng </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <?php } else { ?>
+                                                <span class="badge badge-secondary">Không thể trả phòng</span>
+                                            <?php } ?>
                                             <!-- End Vacate Room Modal -->
                                         </td>
                                     </tr>
-                                <?php
-                                } ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
