@@ -78,6 +78,18 @@ if (isset($_GET['Delete'])) {
     }
 }
 
+// AJAX endpoint lấy thông tin nhân viên
+if (isset($_POST['get_staff_by_number'])) {
+    $number = mysqli_real_escape_string($mysqli, $_POST['get_staff_by_number']);
+    $query = "SELECT id, name FROM staffs WHERE number = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('s', $number);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    echo json_encode($result);
+    exit();
+}
+
 require_once("../partials/head.php");
 ?>
 
@@ -128,7 +140,7 @@ require_once("../partials/head.php");
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="POST" enctype="multipart/form-data">
+                                    <form method="POST" enctype="multipart/form-data" id="roomServiceForm">
                                         <div class="form-row mb-4">
                                             <div style="display:none" class="form-group col-md-6">
                                                 <label for="inputEmail4">Id</label>
@@ -139,7 +151,7 @@ require_once("../partials/head.php");
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Số nhân viên</label>
-                                                <select name="staff_number" class="form-control" id="StaffNumber" onchange="getStaffDetails(this.value);">
+                                                <select name="staff_number" class="form-control" id="StaffNumber">
                                                     <option>Chọn Số Nhân Viên</option>
                                                     <?php
                                                     $ret = "SELECT * FROM `staffs`  ORDER BY `staffs`.`name` ASC ";
@@ -148,7 +160,7 @@ require_once("../partials/head.php");
                                                     $res = $stmt->get_result();
                                                     while ($staff = $res->fetch_object()) {
                                                     ?>
-                                                        <option><?php echo $staff->number; ?></option>
+                                                        <option value="<?php echo $staff->number; ?>"><?php echo $staff->number; ?></option>
                                                     <?php
                                                     } ?>
                                                 </select>
@@ -171,7 +183,7 @@ require_once("../partials/head.php");
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label for="inputEmail4">Tên nhân viên</label>
-                                                <input required type="text" id="StaffName" name="staff_name" class="form-control">
+                                                <input required type="text" id="StaffName" name="staff_name" class="form-control" readonly>
                                                 <input required type="hidden" id="StaffID" name="staff_id" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
@@ -193,60 +205,58 @@ require_once("../partials/head.php");
 
                     <hr>
                     <div class="col-12">
-                        <table id="dt-1" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Số nhân viên</th>
-                                    <th>Tên nhân viên</th>
-                                    <th>Phòng được phân công</th>
-                                    <th>Ngày phân công</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <?php
-                                $ret = "SELECT * FROM `room_service`  ";
-                                $stmt = $mysqli->prepare($ret);
-                                $stmt->execute(); //ok
-                                $res = $stmt->get_result();
-                                while ($service = $res->fetch_object()) {
-                                ?>
+                        <div class="table-responsive">
+                            <table id="dt-1" class="table table-bordered table-hover table-striped">
+                                <thead class="thead-light">
                                     <tr>
-                                        <td><?php echo $service->staff_number; ?></td>
-                                        <td><?php echo $service->staff_name; ?></td>
-                                        <td><?php echo $service->room_number; ?></td>
-                                        <td><?php echo date('d M Y g:ia', strtotime($service->created_at)); ?></td>
-                                        <td>
-
-                                            <a class="badge badge-danger" data-toggle="modal" href="#delete_<?php echo $service->id; ?>">Xóa</a>
-                                            <!-- Delete Modal -->
-                                            <div class="modal fade" id="delete_<?php echo $service->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">XÁC NHẬN</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body text-center text-danger">
-                                                            <h4>Xóa phân công dịch vụ phòng của <?php echo $service->staff_name; ?>?</h4>
-                                                            <br>
-                                                            <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
-                                                            <a href="room_service.php?Delete=<?php echo $service->id; ?>" class="text-center btn btn-danger">Xóa</a>
+                                        <th class="text-center align-middle" style="width: 15%;">Số nhân viên</th>
+                                        <th class="text-center align-middle" style="width: 25%;">Tên nhân viên</th>
+                                        <th class="text-center align-middle" style="width: 20%;">Phòng được phân công</th>
+                                        <th class="text-center align-middle" style="width: 25%;">Ngày phân công</th>
+                                        <th class="text-center align-middle" style="width: 15%;">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $ret = "SELECT * FROM `room_service`";
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->execute();
+                                    $res = $stmt->get_result();
+                                    while ($service = $res->fetch_object()) {
+                                    ?>
+                                        <tr>
+                                            <td class="text-center align-middle"><?php echo htmlspecialchars($service->staff_number); ?></td>
+                                            <td class="text-center align-middle"><?php echo htmlspecialchars($service->staff_name); ?></td>
+                                            <td class="text-center align-middle"><?php echo htmlspecialchars($service->room_number); ?></td>
+                                            <td class="text-center align-middle"><?php echo date('d M Y g:ia', strtotime($service->created_at)); ?></td>
+                                            <td class="text-center align-middle">
+                                                <a class="badge badge-danger" data-toggle="modal" href="#delete_<?php echo $service->id; ?>">Xóa</a>
+                                                <!-- Delete Modal -->
+                                                <div class="modal fade" id="delete_<?php echo $service->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">XÁC NHẬN</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body text-center text-danger">
+                                                                <h4>Xóa phân công dịch vụ phòng của <?php echo htmlspecialchars($service->staff_name); ?>?</h4>
+                                                                <br>
+                                                                <button type="button" class="text-center btn btn-success" data-dismiss="modal">Không</button>
+                                                                <a href="room_service.php?Delete=<?php echo $service->id; ?>" class="text-center btn btn-danger">Xóa</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                                <?php
-                                } ?>
-
-                            </tbody>
-                        </table>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -254,6 +264,33 @@ require_once("../partials/head.php");
         <?php require_once("../partials/footer.php"); ?>
     </div>
     <?php require_once("../partials/scripts.php"); ?>
+    <script>
+        // Khi chọn số nhân viên, lấy tên và id nhân viên
+        document.getElementById('StaffNumber').addEventListener('change', function() {
+            var staffNumber = this.value;
+            if (staffNumber && staffNumber !== 'Chọn Số Nhân Viên') {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        try {
+                            var data = JSON.parse(xhr.responseText);
+                            document.getElementById('StaffName').value = data.name || '';
+                            document.getElementById('StaffID').value = data.id || '';
+                        } catch (e) {
+                            document.getElementById('StaffName').value = '';
+                            document.getElementById('StaffID').value = '';
+                        }
+                    }
+                };
+                xhr.send('get_staff_by_number=' + encodeURIComponent(staffNumber));
+            } else {
+                document.getElementById('StaffName').value = '';
+                document.getElementById('StaffID').value = '';
+            }
+        });
+    </script>
 </body>
 
 </html>
