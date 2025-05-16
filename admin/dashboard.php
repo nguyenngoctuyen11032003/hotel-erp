@@ -308,6 +308,10 @@ require_once("../partials/head.php");
                                                     $stmt->execute(); //ok
                                                     $res = $stmt->get_result();
                                                     while ($payments = $res->fetch_object()) {
+                                                        // Dịch vụ tiếng Việt
+                                                        $service_vn = $payments->service_paid;
+                                                        if ($service_vn == 'Resturant Sales') $service_vn = 'Doanh thu nhà hàng';
+                                                        elseif ($service_vn == 'Reservations' || $service_vn == 'Đặt phòng') $service_vn = 'Đặt phòng';
                                                     ?>
                                                         <tr>
                                                             <td>
@@ -317,7 +321,7 @@ require_once("../partials/head.php");
                                                                 <?php echo number_format($payments->amt, 0, ',', ','); ?> VND
                                                             </td>
                                                             <td>
-                                                                 <?php echo $payments->service_paid; ?>
+                                                                <?php echo $service_vn; ?>
                                                             </td>
                                                             <td>
                                                                 <span class="text-center badge bg-primary"><?php echo date('d M Y g:ia', strtotime($payments->created_at)); ?> </span>

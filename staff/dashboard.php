@@ -79,7 +79,7 @@ require_once("../partials/head.php");
                                 <div class="info-box-content">
                                     <span class="info-box-text">Doanh thu phòng</span>
                                     <span class="info-box-number">
-                                        <?php echo $accomodation; ?> VND
+                                        <?php echo number_format($accomodation, 0, ',', ','); ?> VND
                                     </span>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@ require_once("../partials/head.php");
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Doanh thu nhà hàng</span>
-                                    <span class="info-box-number"><?php echo $Resturant_Service; ?> VND</span>
+                                    <span class="info-box-number"><?php echo number_format($Resturant_Service, 0, ',', ','); ?> VND</span>
                                 </div>
                             </div>
                         </div>
@@ -124,13 +124,13 @@ require_once("../partials/head.php");
                                     <div class="row">
                                         <div class="col-sm-6 col-6">
                                             <div class="description-block border-right">
-                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation); ?> VND</h5>
+                                                <h5 class="description-header"><?php echo number_format($Resturant_Service + $accomodation, 0, ',', ','); ?> VND</h5>
                                                 <span class="description-text">Tổng doanh thu</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-6">
                                             <div class="description-block border-right">
-                                                <h5 class="description-header"><?php echo ($Resturant_Service + $accomodation) - ($salary); ?> VND</h5>
+                                                <h5 class="description-header"><?php echo number_format(($Resturant_Service + $accomodation) - ($salary), 0, ',', ','); ?> VND</h5>
                                                 <span class="description-text">Lợi nhuận sau lương</span>
                                             </div>
                                         </div>
@@ -224,7 +224,7 @@ require_once("../partials/head.php");
                                                             <div class="td-content"><span class="badge badge-success"><?php echo $reservation->room_number; ?></span></div>
                                                         </td>
                                                         <td>
-                                                            <?php echo number_format($reservation->room_cost); ?> VND
+                                                            <?php echo number_format($reservation->room_cost, 0, ',', ','); ?> VND
                                                         </td>
                                                         <td>
                                                             <?php echo $reservation->cust_name; ?>
@@ -273,16 +273,20 @@ require_once("../partials/head.php");
                                                     $stmt->execute();
                                                     $res = $stmt->get_result();
                                                     while ($payments = $res->fetch_object()) {
+                                                        // Dịch vụ tiếng Việt
+                                                        $service_vn = $payments->service_paid;
+                                                        if ($service_vn == 'Resturant Sales') $service_vn = 'Doanh thu nhà hàng';
+                                                        elseif ($service_vn == 'Reservations' || $service_vn == 'Đặt phòng') $service_vn = 'Đặt phòng';
                                                     ?>
                                                         <tr>
                                                             <td>
                                                                 <div class="td-content"><span class="badge badge-success"><?php echo $payments->code; ?></span></div>
                                                             </td>
                                                             <td>
-                                                                <?php echo number_format($payments->amt); ?> VND
+                                                                <?php echo number_format($payments->amt, 0, ',', ','); ?> VND
                                                             </td>
                                                             <td>
-                                                                <?php echo $payments->service_paid; ?>
+                                                                <?php echo $service_vn; ?>
                                                             </td>
                                                             <td>
                                                                 <span class="text-center badge bg-primary"><?php echo date('d/m/Y H:i', strtotime($payments->created_at)); ?> </span>
