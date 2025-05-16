@@ -15,8 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['Add_Customer'])) {
         $created_at = date('Y-m-d H:i:s');
-        $stmt = $mysqli->prepare("INSERT INTO customers (name, phone, email, address, id_number, created_at) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param('ssssss', $name, $phone, $email, $address, $id_number, $created_at);
+        // Sinh mã khách hàng ngắn 8 ký tự (chữ + số)
+        $short_id = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 8));
+        $stmt = $mysqli->prepare("INSERT INTO customers (id, name, phone, email, address, id_number, created_at) VALUES (?,?,?,?,?,?,?)");
+        $stmt->bind_param('sssssss', $short_id, $name, $phone, $email, $address, $id_number, $created_at);
         $stmt->execute();
         $success = $stmt ? "Đã thêm khách hàng thành công" : "Vui lòng thử lại";
     }
@@ -129,7 +131,7 @@ require_once('../partials/head.php');
                                             else $status = '<span class="badge badge-secondary">' . htmlspecialchars($r->status) . '</span>';
                                         ?>
                                         <tr>
-                                            <td><?php echo $r->id; ?></td>
+                                            <td><?php echo htmlspecialchars($r->id); ?></td>
                                             <td><?php echo $r->cust_name; ?></td>
                                             <td><?php echo $r->cust_phone; ?></td>
                                             <td><?php echo $r->cust_email; ?></td>
@@ -141,6 +143,7 @@ require_once('../partials/head.php');
                                             <td><?php echo $status; ?></td>
                                             <td>
                                                 <a href="reservations.php?view=<?php echo $r->id; ?>" class="btn btn-sm btn-info">Chi tiết</a>
+                                                <a href="customers.php?Delete_Customer=<?php echo htmlspecialchars($r->id); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này?');">Xóa</a>
                                             </td>
                                         </tr>
                                         <?php } ?>

@@ -62,17 +62,18 @@ require_once("../partials/head.php");
 
                             <tbody>
                                 <?php
-                                $ret = "SELECT * FROM `payments` WHERE service_paid ='Reservations' ";
+                                // Sửa lại truy vấn để lấy đúng các bản ghi thanh toán đặt phòng (cả tiếng Việt và tiếng Anh)
+                                $ret = "SELECT * FROM `payments` WHERE service_paid = 'Đặt phòng' OR service_paid = 'Reservations'";
                                 $stmt = $mysqli->prepare($ret);
-                                $stmt->execute(); //ok
+                                $stmt->execute();
                                 $res = $stmt->get_result();
                                 while ($payments = $res->fetch_object()) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $payments->code; ?></td>
-                                        <td><?php echo number_format($payments->amt); ?> VND</td>
-                                        <td><?php echo $payments->cust_name; ?></td>
-                                        <td><?php echo $payments->payment_means; ?></td>
+                                        <td><?php echo htmlspecialchars($payments->code); ?></td>
+                                        <td><?php echo number_format($payments->amt, 0, ',', ','); ?> VND</td>
+                                        <td><?php echo htmlspecialchars($payments->cust_name); ?></td>
+                                        <td><?php echo htmlspecialchars($payments->payment_means); ?></td>
                                         <td><?php echo date('d/m/Y', strtotime($payments->created_at)); ?></td>
                                         <td>
                                             <a class="badge badge-success" data-toggle="modal" href="#receipt-<?php echo $payments->id; ?>">In hóa đơn</a>
@@ -108,11 +109,11 @@ require_once("../partials/head.php");
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td><?php echo $payments->cust_name;?></td>
-                                                                                    <td><?php echo number_format($payments->amt); ?> VND</td>
-                                                                                    <td><?php echo $payments->service_paid;?></td>
-                                                                                    <td><?php echo $payments->payment_means;?></td>
-                                                                                    <td><?php echo $payments->code;?></td>
+                                                                                    <td><?php echo htmlspecialchars($payments->cust_name);?></td>
+                                                                                    <td><?php echo number_format($payments->amt, 0, ',', ','); ?> VND</td>
+                                                                                    <td><?php echo htmlspecialchars($payments->service_paid);?></td>
+                                                                                    <td><?php echo htmlspecialchars($payments->payment_means);?></td>
+                                                                                    <td><?php echo htmlspecialchars($payments->code);?></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
