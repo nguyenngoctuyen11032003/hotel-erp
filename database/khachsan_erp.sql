@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th5 16, 2025 lúc 12:15 AM
+-- Thời gian đã tạo: Th5 16, 2025 lúc 08:19 PM
 -- Phiên bản máy phục vụ: 9.1.0
 -- Phiên bản PHP: 8.3.14
 
@@ -102,7 +102,6 @@ CREATE TABLE IF NOT EXISTS `attendance` (
 INSERT INTO `attendance` (`id`, `staff_id`, `date`, `check_in`, `check_out`, `status`, `created_at`) VALUES
 ('', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', '2025-04-08', '17:10:06', '17:10:11', 'Present', '2025-04-08 17:10:06'),
 ('67f6982031fc8', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', '2025-04-09', '15:54:08', '15:54:16', 'Present', '2025-04-09 15:54:08'),
-('67f759fe28748', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', '2025-04-10', '05:41:18', '08:48:00', 'Muộn', '2025-04-10 05:41:18'),
 ('68266c5b23ca5', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', '2025-05-15', '22:36:11', '22:36:14', 'Present', '2025-05-15 22:36:11');
 
 -- --------------------------------------------------------
@@ -239,7 +238,11 @@ CREATE TABLE IF NOT EXISTS `payrolls` (
 --
 
 INSERT INTO `payrolls` (`id`, `code`, `month`, `staff_id`, `staff_name`, `salary`, `created_at`) VALUES
-('11c6ebacb0607f4bfcf32d7931b057c180e193a04f28db98eb', 'LA8QK-43571', 'Tháng 4', '<br />\\r\\n<font size=\\\'1\\\'><table class=\\\'xdebug-error xe-warning\\\' dir=\\\'ltr\\\' border=\\\'1\\\' cellspacing=\\\'0\\\' cellpadding=\\\'1\\\'>\\r\\n<tr><th align=\\\'left\\\' bgcolor=\\\'#f57900\\\' colspan=\\\"5\\\"><', '<br /><font size=\\\'1\\\'><table class=\\\'xdebug-error xe-warning\\\' dir=\\\'ltr\\\' border=\\\'1\\\' cellspacing=\\\'0\\\' cellpadding=\\\'1\\\'><tr><th align=\\\'left\\\' bgcolor=\\\'#f57900\\\' colspan=\\\"5\\\"><span style=\\\'back', '12000000', '2025-05-15 19:42:43');
+('013ed4b998e6065d75a51fdae50e68711e80134fb8f26772d6', '2GPLD-09581', 'Tháng 5', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', 'Nguyễn Ngọc Tuyền', '5000000', '2025-05-16 20:15:21'),
+('4c440478609a804c800ef330b26af8c72ab49be532fda19404', 'N6FU0-87623', 'Tháng 4', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0031', 'Trương Khánh Linh', '8000000', '2025-05-16 20:02:06'),
+('90872017cba678f5c15e6c38b72f891ff5c697b5d984c5163f', 'LW2T5-60581', 'Tháng 4', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', 'Nguyễn Ngọc Tuyền', '5000000', '2025-05-16 20:01:46'),
+('9c4aabcc6c7f628f51b6648e1c3d93d7f1cb17919d1c4bd358', '7PHYW-89120', 'Tháng 5', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0031', 'Trương Khánh Linh', '20000000', '2025-05-16 20:15:54'),
+('fbd78ef656583d2bd70ff70e315a89357f79c780551f94f96d', 'QRD3E-43725', 'Tháng 4', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0017', 'Nguyễn Đại Dương', '5000000', '2025-05-16 20:01:54');
 
 -- --------------------------------------------------------
 
@@ -369,23 +372,26 @@ INSERT INTO `rooms` (`id`, `number`, `type`, `image`, `price`, `status`, `detail
 
 DROP TABLE IF EXISTS `room_service`;
 CREATE TABLE IF NOT EXISTS `room_service` (
-  `id` varchar(200) NOT NULL,
-  `room_id` varchar(200) NOT NULL,
-  `staff_id` varchar(200) NOT NULL,
-  `staff_name` varchar(200) NOT NULL,
-  `staff_number` varchar(200) NOT NULL,
-  `room_number` varchar(200) NOT NULL,
+  `id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `room_id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `staff_id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `staff_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `staff_number` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `room_number` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `room_service`
 --
 
 INSERT INTO `room_service` (`id`, `room_id`, `staff_id`, `staff_name`, `staff_number`, `room_number`, `created_at`) VALUES
-('1522e490fa403c708cdb9ef2663ee5ca02fca5dcff85a41997e2e69fccb20e31601d5df923fbb695671c7e07c4b0979ac9061abcd52b2874383382e5f8d2942981362001ceb520e240ca3754e1d7d43852dd40a0b029a54e53fbf7f4738fc33dec1156ce', '42bf39a56bbe0d5f94ab34ce72235675e04de38d808a2e4b39e77b0803979d5582693eae91a41ecb52889ee82911681d89c13556ba10a649a48d97aed866fcedae8a5b387e9aa6260f85f7eeacf96e7b090153e30844e59c18b9e65deb9cc19', '630877b16604abb4068e93aa67b8b80f9774b72fdb4cecac2930bf9ca1b3d13db3e8516fee8e167904b1c003d4fbfd7f519021497f916e0e74555121f3c4e99a5f95fa9b62e79e9e570e253f3f3a146a91ac85fafc3ce7ff27b6882360b7c9e', 'Irene M. Florence', 'UDIJG-47023', 'MCDQI-45210', '2020-09-25 09:20:51'),
-('8a7f228ab50813ca97a7281cfcd40de35f9b6dfed1', '1cb9c0741c113696b3f2ac8933e8142e105477591da5bdc2bfe361890ed8075ac164d3a3ad807b60917349951d7029488d98766fa55f348f0f281582b62c87fb830534ad141a23c3c465d2855dbf69a97f4b6b6fd1dbe4bb14f43dc0c92de24', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', 'Staff 000', '7AOQL_0000', 'OTICN-26084', '2021-02-03 08:37:07');
+('2730351ee139d6ad3aa45b7218283cf05b5289843628e2265e', '<br />\\r\\n<font size=\\\'1\\\'><table class=\\\'xdebug-error xe-warning\\\' dir=\\\'ltr\\\' border=\\\'1\\\' cellspacing=\\\'0\\\' cellpadding=\\\'1\\\'>\\r\\n<tr><th align=\\\'left\\\' bgcolor=\\\'#f57900\\\' colspan=\\\"5\\\"><span styl', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0030', 'Lê Thị Mỹ Linh', 'NV0009', 'PTT003', '2025-05-16 20:17:03'),
+('2e540b1e68343c0f0c69dcd1231dcf081f03445b48a787e771', '<br />\\r\\n<font size=\\\'1\\\'><table class=\\\'xdebug-error xe-warning\\\' dir=\\\'ltr\\\' border=\\\'1\\\' cellspacing=\\\'0\\\' cellpadding=\\\'1\\\'>\\r\\n<tr><th align=\\\'left\\\' bgcolor=\\\'#f57900\\\' colspan=\\\"5\\\"><span styl', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0017', 'Nguyễn Đại Dương', 'NV0002', 'PĐ008', '2025-05-16 20:03:15'),
+('3246e61f17957e63b4773056b251b730a2b324ac4d99ea4121', '<br />\\r\\n<font size=\\\'1\\\'><table class=\\\'xdebug-error xe-warning\\\' dir=\\\'ltr\\\' border=\\\'1\\\' cellspacing=\\\'0\\\' cellpadding=\\\'1\\\'>\\r\\n<tr><th align=\\\'left\\\' bgcolor=\\\'#f57900\\\' colspan=\\\"5\\\"><span styl', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0000', 'Nguyễn Ngọc Tuyền', 'NV0001', 'PH003', '2025-05-16 20:02:58'),
+('70dc4fdb2bcf994eb6ea7bf3b03d8cb2d57e80cfdfb2a2e9fb', '<br />\\r\\n<font size=\\\'1\\\'><table class=\\\'xdebug-error xe-warning\\\' dir=\\\'ltr\\\' border=\\\'1\\\' cellspacing=\\\'0\\\' cellpadding=\\\'1\\\'>\\r\\n<tr><th align=\\\'left\\\' bgcolor=\\\'#f57900\\\' colspan=\\\"5\\\"><span styl', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0031', 'Trương Khánh Linh', 'NV0010', 'PD005', '2025-05-16 20:03:07'),
+('7d38e72a97af969f64bc7607552a3be031dfaf695b4608795e', '<br />\\r\\n<font size=\\\'1\\\'><table class=\\\'xdebug-error xe-warning\\\' dir=\\\'ltr\\\' border=\\\'1\\\' cellspacing=\\\'0\\\' cellpadding=\\\'1\\\'>\\r\\n<tr><th align=\\\'left\\\' bgcolor=\\\'#f57900\\\' colspan=\\\"5\\\"><span styl', 'e4f2c219f414223be9f1825ceb1dd81ea4abc0029', 'Phạm Minh Tuấn', 'NV0008', 'PTT001', '2025-05-16 20:16:55');
 
 -- --------------------------------------------------------
 
