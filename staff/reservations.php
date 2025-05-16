@@ -6,20 +6,36 @@ require_once('../config/checklogin.php');
 staff(); /* Invoke  Check Login */
 
 if (isset($_POST['Add_Reservation'])) {
-    /* Error Handling And Add Room */
     $error = 0;
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
     } else {
         $error = 1;
-        $err = "Reservation ID  Cannot Be Empty";
+        $err = "Reservation ID Cannot Be Empty";
     }
 
+    // Lấy đúng room_id từ input ẩn hoặc tự động lấy lại từ số phòng nếu thiếu
     if (isset($_POST['room_id']) && !empty($_POST['room_id'])) {
         $room_id = mysqli_real_escape_string($mysqli, trim($_POST['room_id']));
     } else {
-        $error = 1;
-        $err = "Room ID  Cannot Be Empty";
+        if (isset($_POST['room_number']) && !empty($_POST['room_number'])) {
+            $room_number = mysqli_real_escape_string($mysqli, trim($_POST['room_number']));
+            $query = "SELECT id FROM rooms WHERE number = ?";
+            $stmt_room = $mysqli->prepare($query);
+            $stmt_room->bind_param('s', $room_number);
+            $stmt_room->execute();
+            $stmt_room->bind_result($room_id_found);
+            if ($stmt_room->fetch()) {
+                $room_id = $room_id_found;
+            } else {
+                $error = 1;
+                $err = "Không tìm thấy ID phòng cho số phòng đã chọn";
+            }
+            $stmt_room->close();
+        } else {
+            $error = 1;
+            $err = "Room ID Cannot Be Empty";
+        }
     }
 
     if (isset($_POST['room_number']) && !empty($_POST['room_number'])) {
@@ -29,6 +45,7 @@ if (isset($_POST['Add_Reservation'])) {
         $err = "Room Number Cannot Be Empty";
     }
 
+    // Lấy đúng giá trị giá phòng từ trường input readonly (room_cost)
     if (isset($_POST['room_cost']) && !empty($_POST['room_cost'])) {
         $room_cost = mysqli_real_escape_string($mysqli, trim($_POST['room_cost']));
     } else {
@@ -47,28 +64,28 @@ if (isset($_POST['Add_Reservation'])) {
         $check_in = mysqli_real_escape_string($mysqli, trim($_POST['check_in']));
     } else {
         $error = 1;
-        $err = "Check In  Cannot Be Empty";
+        $err = "Check In Cannot Be Empty";
     }
 
     if (isset($_POST['check_out']) && !empty($_POST['check_out'])) {
         $check_out = mysqli_real_escape_string($mysqli, trim($_POST['check_out']));
     } else {
         $error = 1;
-        $err = "Check Out  Cannot Be Empty";
+        $err = "Check Out Cannot Be Empty";
     }
 
     if (isset($_POST['cust_name']) && !empty($_POST['cust_name'])) {
         $cust_name = mysqli_real_escape_string($mysqli, trim($_POST['cust_name']));
     } else {
         $error = 1;
-        $err = "Customer Name  Cannot Be Empty";
+        $err = "Customer Name Cannot Be Empty";
     }
 
     if (isset($_POST['cust_id']) && !empty($_POST['cust_id'])) {
         $cust_id = mysqli_real_escape_string($mysqli, trim($_POST['cust_id']));
     } else {
         $error = 1;
-        $err = "Customer National ID  Cannot Be Empty";
+        $err = "Customer National ID Cannot Be Empty";
     }
 
     if (isset($_POST['cust_phone']) && !empty($_POST['cust_phone'])) {
@@ -82,7 +99,7 @@ if (isset($_POST['Add_Reservation'])) {
         $cust_email = mysqli_real_escape_string($mysqli, trim($_POST['cust_email']));
     } else {
         $error = 1;
-        $err = "Customer Email Number Cannot Be Empty";
+        $err = "Customer Email Cannot Be Empty";
     }
 
     if (isset($_POST['cust_adr']) && !empty($_POST['cust_adr'])) {
@@ -99,9 +116,7 @@ if (isset($_POST['Add_Reservation'])) {
         $err = "Status Cannot Be Empty";
     }
 
-
     if (!$error) {
-        //Update Room That It Has Been Occupied
         $room_status = $_POST['room_status'];
         $query = "INSERT INTO reservations (id, room_id, room_number, room_cost, room_type, check_in, check_out, cust_name, cust_id, cust_phone, cust_email, cust_adr, status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $room_querry = "UPDATE rooms SET status =? WHERE id =?";
@@ -114,12 +129,10 @@ if (isset($_POST['Add_Reservation'])) {
         if ($stmt && $roomstmt) {
             $success = "Added" && header("refresh:1; url=reservations.php");
         } else {
-            //inject alert that task failed
             $info = "Please Try Again Or Try Later";
         }
     }
 }
-
 
 if (isset($_POST['Update_Reservation'])) {
     /* Error Handling And Update Room */
@@ -298,7 +311,7 @@ require_once("../partials/head.php");
                     <div class="text-right">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-room">Thêm đặt phòng</button>
                     </div>
-                    <!-- Add  Modal -->
+                    <!-- Add Modal -->
                     <div class="modal fade" id="add-room">
                         <div class="modal-dialog  modal-xl">
                             <div class="modal-content">
@@ -321,18 +334,17 @@ require_once("../partials/head.php");
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Số phòng</label>
-                                                <select id="RNumber" onchange="getRoomDetails(this.value);" class='form-control' name="room_number" id="">
-                                                    <option selected>Chọn số phòng</option>
+                                                <select name="room_number" id="RNumber" class="form-control" onchange="getRoomDetails(this.value);">
+                                                    <option value="">Chọn số phòng</option>
                                                     <?php
                                                     $ret = "SELECT * FROM `rooms` ";
                                                     $stmt = $mysqli->prepare($ret);
-                                                    $stmt->execute(); //ok
+                                                    $stmt->execute();
                                                     $res = $stmt->get_result();
                                                     while ($rooms = $res->fetch_object()) {
+                                                        echo "<option value='{$rooms->number}'>{$rooms->number}</option>";
+                                                    }
                                                     ?>
-                                                        <option><?php echo $rooms->number; ?></option>
-
-                                                    <?php } ?>
                                                 </select>
                                                 <input type="hidden" name="room_id" id="RID" class="form-control">
                                             </div>
@@ -392,7 +404,7 @@ require_once("../partials/head.php");
                             </div>
                         </div>
                     </div>
-                    <!-- End  Modal -->
+                    <!-- End Modal -->
 
                     <hr>
                     <div class="col-12">
@@ -414,7 +426,7 @@ require_once("../partials/head.php");
                                 <?php
                                 $ret = "SELECT * FROM `reservations` ORDER BY `reservations`.`created_at` DESC";
                                 $stmt = $mysqli->prepare($ret);
-                                $stmt->execute(); //ok
+                                $stmt->execute();
                                 $res = $stmt->get_result();
                                 while ($reservation = $res->fetch_object()) {
                                 ?>
@@ -427,7 +439,6 @@ require_once("../partials/head.php");
                                         <td><?php echo $reservation->cust_id; ?></td>
                                         <td>
                                             <?php
-                                            // Dịch trạng thái Pending sang tiếng Việt
                                             if ($reservation->status == 'Pending') {
                                                 echo '<span class="badge badge-warning">Chờ xác nhận</span>';
                                             } elseif ($reservation->status == 'Paid') {
@@ -469,16 +480,16 @@ require_once("../partials/head.php");
                                                                 <div class="form-row mb-4">
                                                                     <div class="form-group col-md-4">
                                                                         <label for="inputEmail4">Số phòng</label>
-                                                                        <input type="text" readonly value=<?php echo $reservation->room_number; ?> id="roomCost" name="room_number" class="form-control">
+                                                                        <input type="text" readonly value="<?php echo $reservation->room_number; ?>" name="room_number" class="form-control">
                                                                         <input type="hidden" name="room_id" value="<?php echo $reservation->room_id; ?>" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
                                                                         <label for="inputEmail4">Giá phòng</label>
-                                                                        <input type="text" readonly value=<?php echo $reservation->room_cost; ?> id="roomCost" name="room_cost" class="form-control">
+                                                                        <input type="text" readonly value="<?php echo $reservation->room_cost; ?>" name="room_cost" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-4">
                                                                         <label for="inputEmail4">Loại phòng</label>
-                                                                        <input type="text" readonly value=<?php echo $reservation->room_type; ?> id="roomType" name="room_type" class="form-control">
+                                                                        <input type="text" readonly value="<?php echo $reservation->room_type; ?>" name="room_type" class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <hr>
@@ -530,7 +541,7 @@ require_once("../partials/head.php");
                                             </div>
                                             <!-- End Update Modal -->
 
-                                           <!-- Staff Cant Delete Reservations -->
+                                            <!-- Staff Cant Delete Reservations -->
 
                                             <a class="badge badge-success" data-toggle="modal" href="#vacate-<?php echo $reservation->id; ?>">Trả phòng</a>
                                             <!-- Vacate Room Modal  -->
@@ -563,10 +574,45 @@ require_once("../partials/head.php");
             </section>
         </div>
         <?php require_once("../partials/footer.php"); ?>
-
     </div>
     <?php require_once("../partials/scripts.php"); ?>
+    <script>
+        function getRoomDetails(roomNumber) {
+            if (!roomNumber) {
+                document.getElementById('RCost').value = '';
+                document.getElementById('RType').value = '';
+                document.getElementById('RID').value = '';
+                return;
+            }
+            // Lấy giá phòng và loại phòng
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../admin/reservations.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        document.getElementById('RCost').value = data.price ? data.price : '';
+                        document.getElementById('RType').value = data.type ? data.type : '';
+                    } catch (e) {
+                        document.getElementById('RCost').value = '';
+                        document.getElementById('RType').value = '';
+                    }
+                }
+            };
+            xhr.send('get_room_info=' + encodeURIComponent(roomNumber));
 
+            // Lấy room_id (ID phòng) theo số phòng qua AJAX
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open('POST', '../partials/ajax.php', true);
+            xhr2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr2.onload = function () {
+                if (xhr2.status === 200) {
+                    document.getElementById('RID').value = xhr2.responseText.trim();
+                }
+            };
+            xhr2.send('RNumber=' + encodeURIComponent(roomNumber));
+        }
+    </script>
 </body>
-
 </html>
