@@ -282,6 +282,18 @@ if (isset($_GET['Vacate_Room'])) {
         $info = "Vui lòng thử lại sau";
     }
 }
+
+if (isset($_POST['get_room_info'])) {
+    $room_number = mysqli_real_escape_string($mysqli, $_POST['get_room_info']);
+    $query = "SELECT price, type FROM rooms WHERE number = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('s', $room_number);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    echo json_encode($result);
+    exit();
+}
+
 require_once("../partials/head.php");
 ?>
 
@@ -343,29 +355,28 @@ require_once("../partials/head.php");
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Phòng</label>
-                                                <select id="RNumber" onchange="getRoomDetails(this.value);" class='form-control' name="room_number" id="">
-                                                    <option selected>Chọn số phòng</option>
+                                                <label for="room_number">Phòng</label>
+                                                <select name="room_number" id="room_number" class="form-control" onchange="getRoomInfo(this.value)">
+                                                    <option value="">Chọn phòng</option>
                                                     <?php
-                                                    $ret = "SELECT * FROM `rooms` ";
+                                                    $ret = "SELECT * FROM rooms";
                                                     $stmt = $mysqli->prepare($ret);
-                                                    $stmt->execute(); //ok
+                                                    $stmt->execute();
                                                     $res = $stmt->get_result();
-                                                    while ($rooms = $res->fetch_object()) {
+                                                    while ($room = $res->fetch_object()) {
+                                                        echo "<option value='{$room->number}'>{$room->number}</option>";
+                                                    }
                                                     ?>
-                                                        <option><?php echo $rooms->number; ?></option>
-
-                                                    <?php } ?>
                                                 </select>
                                                 <input type="hidden" name="room_id" id="RID" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Giá phòng</label>
-                                                <input type="text" readonly id="RCost" name="room_cost" class="form-control">
+                                                <label for="room_price">Giá phòng</label>
+                                                <input type="text" id="room_price" name="room_price" class="form-control" readonly>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Loại phòng</label>
-                                                <input type="text" readonly id="RType" name="room_type" class="form-control">
+                                                <label for="room_type">Loại phòng</label>
+                                                <input type="text" id="room_type" name="room_type" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <hr>
@@ -611,7 +622,31 @@ require_once("../partials/head.php");
 
     </div>
     <?php require_once("../partials/scripts.php"); ?>
-
+    <script>
+        function getRoomInfo(roomNumber) {
+            if (!roomNumber) {
+                document.getElementById('room_price').value = '';
+                document.getElementById('room_type').value = '';
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        document.getElementById('room_price').value = data.price ? data.price : '';
+                        document.getElementById('room_type').value = data.type ? data.type : '';
+                    } catch (e) {
+                        document.getElementById('room_price').value = '';
+                        document.getElementById('room_type').value = '';
+                    }
+                }
+            };
+            xhr.send('get_room_info=' + encodeURIComponent(roomNumber));
+        }
+    </script>
 </body>
 
 </html>
