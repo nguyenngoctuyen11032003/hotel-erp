@@ -98,6 +98,78 @@ if (isset($_GET['delete'])) {
     }
 }
 
+if (isset($_GET['pay'])) {
+    // Lấy thông tin đặt phòng để thanh toán
+    $reservation_id = $_GET['pay'];
+    $ret = "SELECT * FROM reservations WHERE id = ?";
+    $stmt = $mysqli->prepare($ret);
+    $stmt->bind_param('s', $reservation_id);
+    $stmt->execute();
+    $reservation = $stmt->get_result()->fetch_object();
+    if ($reservation) {
+        // Tính số ngày đặt và số tiền
+        $date1 = date_create($reservation->check_in);
+        $date2 = date_create($reservation->check_out);
+        $diff = date_diff($date1, $date2);
+        $days_stayed = $diff->format("%a");
+        $amount = $days_stayed * $reservation->room_cost;
+        // Hiển thị form xác nhận thanh toán
+        ?>
+        <div class="modal show" style="display:block; background:rgba(0,0,0,0.3);" tabindex="-1">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Xác nhận thanh toán đặt phòng</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div style="display:none">
+                                <input type="text" name="id" value="<?php echo $ID; ?>" class="form-control">
+                                <input type="text" name="month" value="<?php echo date('M'); ?>" class="form-control">
+                                <input type="text" name="service_paid" value="Reservations" class="form-control">
+                                <input type="text" name="r_id" value="<?php echo $reservation->id; ?>" class="form-control">
+                                <input type="text" name="status" value="Paid" class="form-control">
+                            </div>
+                            <div class="form-row mb-4">
+                                <div class="form-group col-md-6">
+                                    <label>Tên khách hàng</label>
+                                    <input required type="text" value="<?php echo $reservation->cust_name; ?>" readonly name="cust_name" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Số tiền thanh toán</label>
+                                    <input required type="text" value="<?php echo $amount; ?>" readonly name="amt" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Mã thanh toán</label>
+                                    <input required type="text" value="<?php echo $paycode; ?>" name="code" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Phương thức thanh toán</label>
+                                    <select class='form-control' name="payment_means">
+                                        <option selected>Tiền mặt</option>
+                                        <option>Mpesa</option>
+                                        <option>Thẻ tín dụng</option>
+                                        <option>Airtel Money</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="submit" name="Pay_Reservation" class="btn btn-primary">Xác nhận</button>
+                            <a href="add_reservation_payment.php" class="btn btn-secondary">Hủy</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Đóng modal khi nhấn Hủy hoặc sau khi thanh toán thành công
+            document.body.classList.add('modal-open');
+        </script>
+        <?php
+    }
+}
+
 require_once("../partials/head.php");
 ?>
 

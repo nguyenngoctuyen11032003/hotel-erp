@@ -15,11 +15,29 @@ if (isset($_POST['Add_Reservation'])) {
         $err = "Không được để trống ID đặt phòng";
     }
 
+    // Sửa lỗi: Lấy đúng room_id từ input ẩn khi chọn phòng
     if (isset($_POST['room_id']) && !empty($_POST['room_id'])) {
         $room_id = mysqli_real_escape_string($mysqli, trim($_POST['room_id']));
     } else {
-        $error = 1;
-        $err = "Không được để trống ID phòng";
+        // Nếu room_id chưa có, tự động lấy lại từ số phòng
+        if (isset($_POST['room_number']) && !empty($_POST['room_number'])) {
+            $room_number = mysqli_real_escape_string($mysqli, trim($_POST['room_number']));
+            $query = "SELECT id FROM rooms WHERE number = ?";
+            $stmt_room = $mysqli->prepare($query);
+            $stmt_room->bind_param('s', $room_number);
+            $stmt_room->execute();
+            $stmt_room->bind_result($room_id_found);
+            if ($stmt_room->fetch()) {
+                $room_id = $room_id_found;
+            } else {
+                $error = 1;
+                $err = "Không tìm thấy ID phòng cho số phòng đã chọn";
+            }
+            $stmt_room->close();
+        } else {
+            $error = 1;
+            $err = "Không được để trống ID phòng";
+        }
     }
 
     if (isset($_POST['room_number']) && !empty($_POST['room_number'])) {
@@ -29,8 +47,9 @@ if (isset($_POST['Add_Reservation'])) {
         $err = "Không được để trống số phòng";
     }
 
-    if (isset($_POST['room_cost']) && !empty($_POST['room_cost'])) {
-        $room_cost = mysqli_real_escape_string($mysqli, trim($_POST['room_cost']));
+    // Sửa lỗi: Lấy đúng giá trị giá phòng từ trường input readonly (room_price)
+    if (isset($_POST['room_price']) && !empty($_POST['room_price'])) {
+        $room_cost = mysqli_real_escape_string($mysqli, trim($_POST['room_price']));
     } else {
         $error = 1;
         $err = "Không được để trống giá phòng";
@@ -99,7 +118,6 @@ if (isset($_POST['Add_Reservation'])) {
         $err = "Không được để trống trạng thái";
     }
 
-
     if (!$error) {
         //Update Room That It Has Been Occupied
         $room_status = $_POST['room_status'];
@@ -114,12 +132,10 @@ if (isset($_POST['Add_Reservation'])) {
         if ($stmt && $roomstmt) {
             $success = "Đã thêm" && header("refresh:1; url=reservations.php");
         } else {
-            //inject alert that task failed
             $info = "Vui lòng thử lại sau";
         }
     }
 }
-
 
 if (isset($_POST['Update_Reservation'])) {
     /* Error Handling And Update Room */
@@ -627,6 +643,7 @@ require_once("../partials/head.php");
             if (!roomNumber) {
                 document.getElementById('room_price').value = '';
                 document.getElementById('room_type').value = '';
+                document.getElementById('RID').value = '';
                 return;
             }
             var xhr = new XMLHttpRequest();
@@ -645,6 +662,17 @@ require_once("../partials/head.php");
                 }
             };
             xhr.send('get_room_info=' + encodeURIComponent(roomNumber));
+
+            // Lấy room_id (ID phòng) theo số phòng qua AJAX
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open('POST', '../partials/ajax.php', true);
+            xhr2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr2.onload = function () {
+                if (xhr2.status === 200) {
+                    document.getElementById('RID').value = xhr2.responseText.trim();
+                }
+            };
+            xhr2.send('RNumber=' + encodeURIComponent(roomNumber));
         }
     </script>
 </body>
