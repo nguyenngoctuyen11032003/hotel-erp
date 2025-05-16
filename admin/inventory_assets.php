@@ -134,6 +134,18 @@ if (isset($_GET['Delete'])) {
 }
 
 require_once("../partials/head.php");
+
+// Lấy đường dẫn logo hệ thống
+$logo_dir = '../public/uploads/sys_logo/logo.png';
+$ret = "SELECT * FROM `system_settings` ";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute();
+$res = $stmt->get_result();
+if ($sys = $res->fetch_object()) {
+    if (!empty($sys->sys_logo)) {
+        $logo_dir = "../public/uploads/sys_logo/$sys->sys_logo";
+    }
+}
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -256,7 +268,7 @@ require_once("../partials/head.php");
                                                                 <div class="row">
                                                                     <div class="col-12 ">
                                                                         <h4 class="text-center">
-                                                                            <img height="100" width="200" src="../public/uploads/sys_logo/logo.png" class="img-thumbnail img-fluid" alt="Logo hệ thống">
+                                                                            <img height="100" width="200" src="<?php echo $logo_dir; ?>" class="img-thumbnail img-fluid" alt="Logo hệ thống">
                                                                             <br>
                                                                             <small class="float-right">Tài sản được ghi nhận vào: <?php echo date('d M Y g:ia', strtotime($asset->created_at)); ?></small>
                                                                         </h4>

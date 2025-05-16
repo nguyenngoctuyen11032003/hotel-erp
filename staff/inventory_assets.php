@@ -5,6 +5,18 @@ require_once('../config/codeGen.php');
 require_once('../config/checklogin.php');
 staff(); /* Gọi kiểm tra đăng nhập */
 
+// Lấy đường dẫn logo hệ thống
+$logo_dir = '../public/uploads/sys_logo/logo.png';
+$ret = "SELECT * FROM `system_settings` ";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute();
+$res = $stmt->get_result();
+if ($sys = $res->fetch_object()) {
+    if (!empty($sys->sys_logo)) {
+        $logo_dir = "../public/uploads/sys_logo/$sys->sys_logo";
+    }
+}
+
 if (isset($_POST['add_asset'])) {
     /* Xử lý lỗi */
     $error = 0;
@@ -242,7 +254,7 @@ require_once("../partials/head.php");
                                                                 <div class="row">
                                                                     <div class="col-12 ">
                                                                         <h4 class="text-center">
-                                                                            <img height="100" width="200" src="../public/uploads/sys_logo/logo.png" class="img-thumbnail img-fluid" alt="Logo hệ thống">
+                                                                            <img height="100" width="200" src="<?php echo $logo_dir; ?>" class="img-thumbnail img-fluid" alt="Logo hệ thống">
                                                                             <br>
                                                                             <small class="float-right">Tài sản được ghi nhận vào: <?php echo date('d/m/Y H:i', strtotime($asset->created_at)); ?></small>
                                                                         </h4>
