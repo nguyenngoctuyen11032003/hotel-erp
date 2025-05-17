@@ -310,7 +310,7 @@ require_once("../partials/head.php");
                                                     while ($payments = $res->fetch_object()) {
                                                         // Dịch vụ tiếng Việt
                                                         $service_vn = $payments->service_paid;
-                                                        if ($service_vn == 'Resturant Sales') $service_vn = 'Doanh thu nhà hàng';
+                                                        if ($service_vn == 'Resturant Sales') $service_vn = 'Nhà hàng';
                                                         elseif ($service_vn == 'Reservations' || $service_vn == 'Đặt phòng') $service_vn = 'Đặt phòng';
                                                     ?>
                                                         <tr>
