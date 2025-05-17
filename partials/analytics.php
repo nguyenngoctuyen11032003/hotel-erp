@@ -57,7 +57,7 @@ $stmt->close();
 */
 
 // 1. Phòng đơn
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đơn'";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đơn' AND (status = 'Đã thanh toán' OR status = 'Đã trả phòng' OR status = 'Paid' OR status = 'Checked Out')";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Single);
@@ -66,7 +66,7 @@ $stmt->close();
 $Single = $Single ? (int)$Single : 0;
 
 // 2. Phòng đôi
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đôi'";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đôi' AND (status = 'Đã thanh toán' OR status = 'Đã trả phòng' OR status = 'Paid' OR status = 'Checked Out')";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Double);
@@ -75,7 +75,7 @@ $stmt->close();
 $Double = $Double ? (int)$Double : 0;
 
 // 3. Phòng deluxe
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng deluxe'";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng deluxe' AND (status = 'Đã thanh toán' OR status = 'Đã trả phòng' OR status = 'Paid' OR status = 'Checked Out')";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Deluxe);
@@ -84,7 +84,7 @@ $stmt->close();
 $Deluxe = $Deluxe ? (int)$Deluxe : 0;
 
 // 4. Phòng thường lớn
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng thường lớn'";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng thường lớn' AND (status = 'Đã thanh toán' OR status = 'Đã trả phòng' OR status = 'Paid' OR status = 'Checked Out')";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Regular);
@@ -93,7 +93,7 @@ $stmt->close();
 $Regular = $Regular ? (int)$Regular : 0;
 
 // 5. Phòng penthouse
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng penthouse'";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng penthouse' AND (status = 'Đã thanh toán' OR status = 'Đã trả phòng' OR status = 'Paid' OR status = 'Checked Out')";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Penthouse);
@@ -102,7 +102,7 @@ $stmt->close();
 $Penthouse = $Penthouse ? (int)$Penthouse : 0;
 
 // 6. Phòng tổng thống
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng tổng thống'";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng tổng thống' AND (status = 'Đã thanh toán' OR status = 'Đã trả phòng' OR status = 'Paid' OR status = 'Checked Out')";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Presidential);
