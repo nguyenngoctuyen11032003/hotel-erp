@@ -57,52 +57,58 @@ $stmt->close();
 */
 
 // 1. Phòng đơn
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đơn' AND status ='Đã thanh toán'  ";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đơn'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Single);
 $stmt->fetch();
 $stmt->close();
+$Single = $Single ? (int)$Single : 0;
 
 // 2. Phòng đôi
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đôi' AND status ='Đã thanh toán'  ";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng đôi'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Double);
 $stmt->fetch();
 $stmt->close();
+$Double = $Double ? (int)$Double : 0;
 
 // 3. Phòng deluxe
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng deluxe' AND status ='Đã thanh toán'  ";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng deluxe'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Deluxe);
 $stmt->fetch();
 $stmt->close();
+$Deluxe = $Deluxe ? (int)$Deluxe : 0;
 
 // 4. Phòng thường lớn
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng thường lớn' AND status ='Đã thanh toán' ";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng thường lớn'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Regular);
 $stmt->fetch();
 $stmt->close();
+$Regular = $Regular ? (int)$Regular : 0;
 
 // 5. Phòng penthouse
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng penthouse' AND status ='Đã thanh toán'  ";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng penthouse'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Penthouse);
 $stmt->fetch();
 $stmt->close();
+$Penthouse = $Penthouse ? (int)$Penthouse : 0;
 
 // 6. Phòng tổng thống
-$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng tổng thống' AND status ='Đã thanh toán'  ";
+$query = "SELECT SUM(room_cost) FROM `reservations` WHERE room_type ='Phòng tổng thống'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($Presidential);
 $stmt->fetch();
 $stmt->close();
+$Presidential = $Presidential ? (int)$Presidential : 0;
 
 /*
     Thống kê số lượt đặt phòng theo loại phòng
