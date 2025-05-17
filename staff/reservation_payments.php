@@ -86,7 +86,21 @@ require_once("../partials/head.php");
                                                                 <div class="row">
                                                                     <div class="col-12 ">
                                                                         <h4 class="text-center">
-                                                                            <img height="100" width="200" src="../public/uploads/sys_logo/logo.png" class="img-thumbnail img-fluid" alt="System Logo">
+                                                                            <?php
+                                                                            // Lấy logo động từ system_settings
+                                                                            $ret_logo = "SELECT sys_logo FROM system_settings LIMIT 1";
+                                                                            $stmt_logo = $mysqli->prepare($ret_logo);
+                                                                            $stmt_logo->execute();
+                                                                            $stmt_logo->bind_result($sys_logo);
+                                                                            $stmt_logo->fetch();
+                                                                            $stmt_logo->close();
+                                                                            if (empty($sys_logo)) {
+                                                                                $logo_dir = '../public/uploads/sys_logo/logo.png';
+                                                                            } else {
+                                                                                $logo_dir = "../public/uploads/sys_logo/$sys_logo";
+                                                                            }
+                                                                            ?>
+                                                                            <img height="100" width="200" src="<?php echo $logo_dir; ?>" class="img-thumbnail img-fluid" alt="System Logo">
                                                                             <br>
                                                                             <small class="float-right">Ngày: <?php echo date('d/m/Y');?></small>
                                                                         </h4>
