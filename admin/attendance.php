@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once('../config/config.php');
-require_once('../config/codeGen.php');
 require_once('../config/checklogin.php');
+require_once('../config/codeGen.php'); // Thêm dòng này nếu bạn có file codeGen.php để sinh mã id
 sudo(); /* Gọi kiểm tra đăng nhập Admin */
 
 // Thêm chấm công
@@ -21,24 +21,31 @@ if (isset($_POST['Add_Attendance'])) {
     if (!$status) { $error = 1; $err = "Vui lòng chọn trạng thái"; }
 
     if (!$error) {
-        $sql = "SELECT * FROM attendance WHERE staff_id = ? AND date = ?";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param('ss', $staff_id, $date);
-        $stmt->execute();
-        $stmt->store_result();
-        if ($stmt->num_rows > 0) {
-            $err = "Nhân viên này đã được chấm công ngày này";
+        // Sinh id duy nhất cho bản ghi chấm công
+        $id = $ID ?? uniqid(); // $ID từ codeGen.php hoặc dùng uniqid()
+        $staff_id = $_POST['staff_id'];
+        $date = $_POST['date'];
+        $check_in = $_POST['check_in'];
+        $check_out = $_POST['check_out'];
+        $status = $_POST['status'];
+
+        // Kiểm tra trùng chấm công cho cùng nhân viên và ngày
+        $stmt_check = $mysqli->prepare("SELECT id FROM attendance WHERE staff_id = ? AND date = ?");
+        $stmt_check->bind_param('ss', $staff_id, $date);
+        $stmt_check->execute();
+        $stmt_check->store_result();
+        if ($stmt_check->num_rows > 0) {
+            $err = "Nhân viên này đã được chấm công cho ngày này!";
         } else {
-            $query = "INSERT INTO attendance (staff_id, date, check_in, check_out, status) VALUES (?,?,?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            $stmt->bind_param('sssss', $staff_id, $date, $check_in, $check_out, $status);
-            $stmt->execute();
-            if ($stmt) {
-                $success = "Đã thêm chấm công thành công" && header("refresh:1; url=attendance.php");
+            $stmt = $mysqli->prepare("INSERT INTO attendance (id, staff_id, date, check_in, check_out, status) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param('ssssss', $id, $staff_id, $date, $check_in, $check_out, $status);
+            if ($stmt->execute()) {
+                $success = "Đã thêm chấm công thành công!" && header("refresh:1; url=attendance.php");
             } else {
-                $info = "Vui lòng thử lại hoặc thử lại sau";
+                $err = "Lỗi khi thêm chấm công. Vui lòng thử lại.";
             }
         }
+        $stmt_check->close();
     }
 }
 
