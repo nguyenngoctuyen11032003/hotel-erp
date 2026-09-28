@@ -1,0 +1,18 @@
+# Composer dependencies (install with `composer install`)
+/vendor/
+
+# Environment / local config
+.env
+.env.*
+!.env.example
+
+# Logs and backups
+*.log
+*.sql.gz
+*.bak
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
