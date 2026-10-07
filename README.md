@@ -91,15 +91,17 @@ ERP_HOTEL_NNT/
    mysql -u root -e "CREATE DATABASE khachsan_erp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
    mysql -u root khachsan_erp < database/khachsan_erp.sql
    ```
-4. Check the database settings. All three files default to `localhost`, user `root` and an empty password:
+4. Check the database settings. `config/config.php` (most pages), `config/DataSource.php` (Excel import) and `config/pdoconfig.php` (`partials/ajax.php`) all read them from `config/env.php`. It uses these environment variables, and falls back to the defaults when a variable is not set:
 
-   | File | Used by | Database name |
-   |------|---------|---------------|
-   | `config/config.php` | Most pages (mysqli) | `khachsan_erp` |
-   | `config/DataSource.php` | Excel import (mysqli) | `khachsan_erp` |
-   | `config/pdoconfig.php` | `partials/ajax.php` (PDO) | `KEA_Hotel_ERP` |
+   | Variable | Railway alternative | Default |
+   |----------|---------------------|---------|
+   | `DB_HOST` | `MYSQLHOST` | `localhost` |
+   | `DB_PORT` | `MYSQLPORT` | `3306` |
+   | `DB_USER` | `MYSQLUSER` | `root` |
+   | `DB_PASSWORD` | `MYSQLPASSWORD` | *(empty)* |
+   | `DB_NAME` | `MYSQLDATABASE` | `khachsan_erp` |
 
-   `config/pdoconfig.php` points to a different database name. Change `$DB_name` to `khachsan_erp`. If you don't, the AJAX lookups (room ID/price/type by room number, staff by staff number) will fail.
+   With XAMPP's defaults you don't need to set anything.
 
 5. The SQL dump includes a default admin account. Change its credentials after import.
 
@@ -117,12 +119,30 @@ php -S localhost:8000
 ```
 Then open `http://localhost:8000/`, `/admin/` or `/staff/`.
 
+## Deploy (Railway)
+
+Vercel cannot host this project. It has no PHP runtime and no MySQL, and its filesystem does not keep uploaded files. Use a host that runs Docker, such as Railway. The `Dockerfile` in the repository also works on Render, Fly.io or a VPS.
+
+1. In Railway, create a project from this GitHub repository. Railway finds the `Dockerfile` and builds it.
+2. Add a **MySQL** database to the same project.
+3. In the web service's **Variables**, add references to the database: `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD` and `MYSQLDATABASE` (use `${{MySQL.MYSQLHOST}}` and so on).
+4. Add a **Volume** to the web service, mounted at `/var/www/html/public/uploads`. Without it, uploaded room images and logos disappear on every redeploy.
+5. Under **Settings → Networking**, choose **Generate Domain**.
+
+On first start the container imports `database/khachsan_erp.sql`, but only if the database has no tables yet (`docker/init-db.php`). It also copies the bundled images into the empty uploads volume. Later restarts leave the data alone.
+
+To try the image locally:
+```bash
+docker build -t hotel-erp .
+docker run -p 8080:8080 -e PORT=8080 -e DB_HOST=<mysql host> -e DB_USER=root -e DB_PASSWORD=<password> -e DB_NAME=khachsan_erp hotel-erp
+```
+
 ## Notes and limitations
 
 - Passwords are hashed with `sha1(md5(...))`, which is not secure. Switch to `password_hash()` before any real deployment.
 - Some queries build SQL from request input by string concatenation (for example the email check in password reset). Prepared statements are used in other places, but not everywhere.
 - Password reset does not send any email. It sets a random password and sends the user straight to a confirmation page.
-- Database credentials are hard-coded in three separate config files. There is no `.env` or shared configuration.
+- Database settings come from environment variables only. A `.env` file is not read.
 - Room types and reservation statuses are Vietnamese strings stored in the database (for example `Phòng đơn`, `Đã thanh toán`), and the dashboard analytics depend on those exact values.
 - `coderatio/simple-backup` is installed, but no backup feature is built into the application.
 - There are no automated tests.

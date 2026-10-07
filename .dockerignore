@@ -1,0 +1,6 @@
+.git
+vendor
+.vercel
+.env
+.env.*
+*.log
