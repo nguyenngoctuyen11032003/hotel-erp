@@ -21,15 +21,9 @@ namespace keaHotelERP;
 class DataSource
 {
 
-    // PHP 7.1.0 visibility modifiers are allowed for class constants.
-    // when using above 7.1.0, declare the below constants as private
-    const HOST = 'localhost';
-
-    const USERNAME = 'root';
-
-    const PASSWORD = '';
-
-    const DATABASENAME = 'khachsan_erp';
+    // Connection settings come from config/env.php (environment variables,
+    // falling back to localhost/root for XAMPP).
+    private $config;
 
     private $conn;
 
@@ -45,6 +39,8 @@ class DataSource
      */
     function __construct()
     {
+        require __DIR__ . '/env.php';
+        $this->config = $DB_CONFIG;
         $this->conn = $this->getConnection();
     }
 
@@ -56,7 +52,7 @@ class DataSource
      */
     public function getConnection()
     {
-        $conn = new \mysqli(self::HOST, self::USERNAME, self::PASSWORD, self::DATABASENAME);
+        $conn = new \mysqli($this->config['host'], $this->config['user'], $this->config['pass'], $this->config['name'], $this->config['port']);
 
         if (mysqli_connect_errno()) {
             trigger_error("Problem with connecting to database.");
